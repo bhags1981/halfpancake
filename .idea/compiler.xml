@@ -18,6 +18,9 @@
         <processorPath useClasspath="true" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="HalfPancakeGraphN2N_main" target="1.5" />
+      <module name="HalfPancakeGraphN2N_test" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
