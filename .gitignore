@@ -15,3 +15,5 @@ hs_err_pid*
 build/
 .gradle/
 build/kotlin-classes/main/META-INF/HalfPancakeGraphN2N-compileKotlin.kotlin_module
+
+.idea/workspace.xml
