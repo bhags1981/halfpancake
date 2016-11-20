@@ -17,3 +17,7 @@ build/
 build/kotlin-classes/main/META-INF/HalfPancakeGraphN2N-compileKotlin.kotlin_module
 
 .idea/workspace.xml
+
+.gradle/2.9/taskArtifacts/fileHashes.bin
+
+.gradle/2.9/taskArtifacts/cache.properties.lock
