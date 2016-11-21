@@ -14,7 +14,7 @@ hs_err_pid*
 .idea/
 build/
 .gradle/
-build/kotlin-classes/main/META-INF/HalfPancakeGraphN2N-compileKotlin.kotlin_module
+build/kotlin-classes/net.kanekolab.graph.halfpancake.main/META-INF/HalfPancakeGraphN2N-compileKotlin.kotlin_module
 
 .idea/workspace.xml
 
