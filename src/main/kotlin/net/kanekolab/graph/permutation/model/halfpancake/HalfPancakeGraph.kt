@@ -22,7 +22,7 @@ class HalfPancakeGraph(dimension:Int) : RegularGraph(dimension,Math.ceil((dimens
      */
 
 
-    override fun getVertexWithId(id:String): Node {
+    override fun getNodeById(id:String): Node {
         if(id.length != _dimension){
             throw IllegalArgumentException("Vertex ID "+id+" does not match with graph dimension " +_dimension)
         }

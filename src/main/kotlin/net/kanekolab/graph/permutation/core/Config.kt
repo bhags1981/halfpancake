@@ -5,4 +5,9 @@ package net.kanekolab.graph.permutation.core
  */
 object Config {
     val currentDimension = 10 //Max = 11 , Min = 5
+
+    /**
+     * 計算量に影響があるデバグ用のメッソドを使用するかしないかを設定
+     */
+    var debugMode:Boolean = true
 }

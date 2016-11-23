@@ -1,6 +1,6 @@
-package net.kanekolab.graph.permutation.strategy.halfpancake.n2n
+package net.kanekolab.graph.permutation.strategy.halfpancake.casefactory
 
-import net.kanekolab.graph.permutation.manager.PermutationManager
+import net.kanekolab.graph.permutation.model.Permutation
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
 import net.kanekolab.graph.permutation.vo.halfpancake.HPCase
@@ -9,7 +9,7 @@ import net.kanekolab.graph.permutation.vo.halfpancake.HPCaseType
 /**
  * Created by bhags on 2016/11/21.
  */
-class HPCaseFactory(graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode) {
+class HPN2NCaseFactory(graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode) {
     var _graph = graph
     var _sourceNode = sourceNode
     var _destinationNode = destinationNode

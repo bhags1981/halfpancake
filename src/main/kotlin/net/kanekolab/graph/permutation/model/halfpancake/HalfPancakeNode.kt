@@ -1,6 +1,6 @@
 package net.kanekolab.graph.permutation.model.halfpancake
 
-import net.kanekolab.graph.permutation.model.PrefixReversalGenerator
+import net.kanekolab.graph.permutation.model.PrefixReversalOperator
 import net.kanekolab.graph.permutation.model.Node
 
 /**
@@ -18,7 +18,7 @@ class HalfPancakeNode(id:String, degree:Int) : Node(id,degree){
         if(n == _degree){
             generatorFactor = _id.length
         }
-        var neighborId = PrefixReversalGenerator().generate(_id,generatorFactor);
+        var neighborId = PrefixReversalOperator().generate(_id,generatorFactor);
 
         return HalfPancakeNode(neighborId, _degree)
     }
@@ -26,7 +26,13 @@ class HalfPancakeNode(id:String, degree:Int) : Node(id,degree){
     override fun isNeighbor(other: Node):Boolean
     {
         for (i in 1.._degree){
-            if(PrefixReversalGenerator().generate(_id,i).equals(other.getId()))
+
+            //Nth neighbor
+            if(i == _degree && PrefixReversalOperator().generate(_id,_id.length).equals(other.getId()))
+                return true
+
+            //1 to ~n neighbor
+            if(PrefixReversalOperator().generate(_id,i).equals(other.getId()))
                 return true
         }
         return false

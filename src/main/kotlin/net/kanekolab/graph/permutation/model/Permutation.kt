@@ -1,4 +1,4 @@
-package net.kanekolab.graph.permutation.manager
+package net.kanekolab.graph.permutation.model
 
 import net.kanekolab.graph.permutation.core.Constants
 import java.awt.Dimension
@@ -6,7 +6,7 @@ import java.awt.Dimension
 /**
  * Created by bhags on 2016/11/20.
  */
-class PermutationManager {
+class Permutation {
     private var permutationList:MutableList<String> = mutableListOf();
     fun main(args: Array<String>) {
         saveAllPermutation("123456789ab")

@@ -1,6 +1,6 @@
 package net.kanekolab.graph.permutation
 
-import net.kanekolab.graph.permutation.manager.PermutationManager
+import net.kanekolab.graph.permutation.model.Permutation
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 
 /**
@@ -14,7 +14,7 @@ fun main(args: Array<String>) {
 //    }
 
     var halfPancakeGraph = HalfPancakeGraph(dimension  =  5)
-    var vertex = halfPancakeGraph.getVertexWithId("12345")
+    var vertex = halfPancakeGraph.getNodeById("12345")
     for(i in 1.. halfPancakeGraph.getDegree()){
         var neighbor = vertex.getNthNeighbor(i)
         println(neighbor.getId())
