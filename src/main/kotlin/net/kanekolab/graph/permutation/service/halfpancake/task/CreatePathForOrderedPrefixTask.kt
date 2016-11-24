@@ -10,7 +10,7 @@ import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
  * index must be ~n (or ~n - 1  when n is even)
  * Created by bhags on 2016/11/23.
  */
-class CreatePathToSpecifiedPrefixWithInitReverseIndexTask(graph:HalfPancakeGraph, path:UniquePath, isLeftCenter:Boolean = false){
+class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, isLeftCenter:Boolean = false){
     private val _graph:HalfPancakeGraph = graph
     private val _path:UniquePath = path
     private var _centerReverseIndex:Int = graph.getDegree()
