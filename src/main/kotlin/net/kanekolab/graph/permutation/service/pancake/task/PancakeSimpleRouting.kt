@@ -16,20 +16,30 @@ class PancakeSimpleRouting (sourceNode: Node, destinationNode:Node){
     fun run(){
         //Find index for reverse
         var currentNeighborNode = _sourceNode
-        for(i in _destinationNode.getId().length - 1 .. 1){
+        for(i in _destinationNode.getId().length - 1 downTo 1){
             var targetSymbol = _destinationNode.getId().get(i)
 
             for(j in  0 .. currentNeighborNode.getId().length){
-                var currentSymbol = _sourceNode.getId().get(j)
+                var currentSymbol = currentNeighborNode.getId().get(j)
                 if(currentSymbol.equals(targetSymbol)){
-                    if(i==j)break;//No need to change
+                    if(i==j)break//No need to change
 
-                    currentNeighborNode = PrefixReversalOperator().generate()
+                    if(j!=0) {
+                        currentNeighborNode = currentNeighborNode.getNthNeighbor(j)
+                        _path.addNode(currentNeighborNode)
+                    }
 
+                    if(currentNeighborNode.getId().equals(_destinationNode.getId()))
+                        return;
+
+                    currentNeighborNode = currentNeighborNode.getNthNeighbor(i)
+                    _path.addNode(currentNeighborNode)
+                    break
                 }
             }
         }
-
-
+    }
+    fun getPath():UniquePath{
+        return _path
     }
 }
