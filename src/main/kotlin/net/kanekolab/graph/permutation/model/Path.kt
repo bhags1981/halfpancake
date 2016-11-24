@@ -9,13 +9,15 @@ import net.kanekolab.graph.permutation.model.Node
 open class Path (sourceNode: Node) {
     protected  var _pathList:MutableList<String> = mutableListOf(sourceNode.getId())
     protected  var _destinationNode: Node = sourceNode
+
+
     open fun addNode(intermediateNode: Node){
+        //Check unique for all path
+        UsedNodes.addNodeId(intermediateNode.getId())
         _pathList.add(intermediateNode.getId())
 
-
         //isNeighborが O(n)であるため
-        //Debug modeが trueの場合のみ使用。
-
+        //Debug modeが trueの場合のみ使用。a
         if(Config.debugMode && !_destinationNode.isNeighbor(intermediateNode)){
             throw Exception("The node " + intermediateNode.getId() + " is not neighbor node of " + _destinationNode.getId())
         }
