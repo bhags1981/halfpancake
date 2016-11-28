@@ -11,6 +11,7 @@ open class Path (sourceNode: Node) {
     protected  var _destinationNode: Node = sourceNode
 
 
+
     open fun addNode(intermediateNode: Node){
         //Check unique for all path
         UsedNodes.addNodeId(intermediateNode.getId())
@@ -29,7 +30,10 @@ open class Path (sourceNode: Node) {
         return _pathList.toString()
     }
 
-    fun getDestinationNodeId():Node{
+    fun getLastNode():Node{
         return _destinationNode
+    }
+    fun getList():MutableList<String>{
+        return _pathList
     }
 }

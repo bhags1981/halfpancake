@@ -30,7 +30,7 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
 
     fun runEvenType1(){
 
-        var sourceNode = _path.getDestinationNodeId() as HalfPancakeNode
+        var sourceNode = _path.getLastNode() as HalfPancakeNode
 
         //Reverse on 2. Reverse on 2 is the first neighbor node.
         var neighborNode : HalfPancakeNode = sourceNode.getNthNeighbor(_makeUniquePermutationNeighborNumber) as HalfPancakeNode
@@ -44,7 +44,7 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
 
     fun runEvenType2(){
         var selectedNeighborNumber = _centerReverseIndex - 2
-        var sourceNode = _path.getDestinationNodeId() as HalfPancakeNode
+        var sourceNode = _path.getLastNode() as HalfPancakeNode
 
         //Reverse on 2. Reverse on 2 is the first neighbor node.
         var neighborNode : HalfPancakeNode = sourceNode.getNthNeighbor(_makeUniquePermutationNeighborNumber) as HalfPancakeNode
@@ -69,7 +69,7 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
     fun runOdd(){
         var selectedNeighborNumber = _centerReverseIndex - 1
 
-        var sourceNode = _path.getDestinationNodeId() as HalfPancakeNode
+        var sourceNode = _path.getLastNode() as HalfPancakeNode
 
         //Reverse on 2. Reverse on 2 is the first neighbor node.
         var neighborNode : HalfPancakeNode = sourceNode.getNthNeighbor(_makeUniquePermutationNeighborNumber) as HalfPancakeNode

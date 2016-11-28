@@ -2,16 +2,17 @@ package net.kanekolab.graph.permutation.service.pancake.task
 
 import com.sun.tools.internal.xjc.reader.gbind.SourceNode
 import net.kanekolab.graph.permutation.model.Node
+import net.kanekolab.graph.permutation.model.Path
 import net.kanekolab.graph.permutation.model.PrefixReversalOperator
 import net.kanekolab.graph.permutation.model.UniquePath
 
 /**
  * Created by bhags on 2016/11/24.
  */
-class PancakeSimpleRouting (sourceNode: Node, destinationNode:Node){
-    private var _sourceNode:Node = sourceNode
+class PancakeSimpleRouting (path: Path, destinationNode:Node ){
+    private var _sourceNode:Node = path.getLastNode()
     private var _destinationNode:Node = destinationNode
-    private var _path:UniquePath = UniquePath(sourceNode)
+    private var _path:Path = path
 
     fun run(){
         //Find index for reverse
@@ -39,7 +40,7 @@ class PancakeSimpleRouting (sourceNode: Node, destinationNode:Node){
             }
         }
     }
-    fun getPath():UniquePath{
+    fun getPath():Path{
         return _path
     }
 }
