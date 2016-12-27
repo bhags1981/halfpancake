@@ -1,6 +1,5 @@
 package net.kanekolab.graph.permutation.service.halfpancake.task
 
-import com.sun.tools.internal.xjc.reader.gbind.SourceNode
 import net.kanekolab.graph.permutation.model.Node
 import net.kanekolab.graph.permutation.model.Path
 import net.kanekolab.graph.permutation.model.UniquePath
