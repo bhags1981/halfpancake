@@ -1,7 +1,7 @@
 package net.kanekolab.graph.permutation.service.halfpancake.task
 
 import net.kanekolab.graph.permutation.model.Path
-import net.kanekolab.graph.permutation.model.Permutation
+import net.kanekolab.graph.permutation.service.PermutationService
 import net.kanekolab.graph.permutation.model.UniquePath
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
@@ -22,7 +22,7 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
     fun initTestGraph(dimension: Int){
         testGraphDimension = dimension
         graph = HalfPancakeGraph(testGraphDimension!!)
-        sourceNode = graph!!.getNodeById(Permutation().getIdentifyPermutationForDimension(testGraphDimension!!)) as HalfPancakeNode
+        sourceNode = graph!!.getNodeById(PermutationService().getIdentifyPermutationForDimension(testGraphDimension!!)) as HalfPancakeNode
     }
 
 
@@ -36,8 +36,8 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         path.addNode(intermediateNode)
         var isLeftCenter:Boolean = false
         var task: CreatePathForOrderedPrefixTask = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter)
-        task.run();
-        var newPath = task.getPath()
+        task.executeTask();
+        var newPath = task.getResult()
 
         //todo
         //Create assertion.
@@ -57,8 +57,8 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         path.addNode(intermediateNode)
         var isLeftCenter:Boolean = true
         var task: CreatePathForOrderedPrefixTask = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter)
-        task.run();
-        var newPath = task.getPath()
+        task.executeTask();
+        var newPath = task.getResult()
 
         //todo
         //Create assertion.
@@ -77,8 +77,8 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         path.addNode(intermediateNode)
         var isLeftCenter:Boolean = false
         var task: CreatePathForOrderedPrefixTask = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter)
-        task.run();
-        var newPath = task.getPath()
+        task.executeTask();
+        var newPath = task.getResult()
 
         //todo
         //Create assertion.

@@ -4,20 +4,22 @@ import net.kanekolab.graph.permutation.model.Path
 import net.kanekolab.graph.permutation.model.UniquePath
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
+import net.kanekolab.graph.permutation.service.ServiceTask
 
 /**
  *
+ * What for isLeftCenter???
  * index must be ~n (or ~n - 1  when n is even)
  * Created by bhags on 2016/11/23.
  */
-class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, isLeftCenter:Boolean = false){
+class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, isLeftCenter:Boolean = false) : ServiceTask<UniquePath> {
     private val _graph:HalfPancakeGraph = graph
     private val _path:UniquePath = path
     private var _centerReverseIndex:Int = graph.getDegree()
     private val _isLeftCenter:Boolean = isLeftCenter
     private var _makeUniquePermutationNeighborNumber = 1
-    fun run(){
 
+    override fun executeTask(){
         if(_graph.isEvenDimension()){
             if(!_isLeftCenter)
                 runEvenType1()
@@ -26,6 +28,10 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
         }else {
             runOdd()
         }
+    }
+
+    override fun getResult():UniquePath{
+        return _path
     }
 
     fun runEvenType1(){
@@ -93,8 +99,6 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
     }
 
 
-    fun getPath():Path{
-        return _path
-    }
+
 
 }

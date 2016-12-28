@@ -15,7 +15,7 @@ class CreatePathToAllNeighborTaskTest {
         var graph:HalfPancakeGraph = HalfPancakeGraph(7)
         var sourceNode: Node = graph.getNodeById("1234567")
         var task:CreatePathToAllNeighborTask = CreatePathToAllNeighborTask(graph,sourceNode)
-        task.run()
-        task.getCurrentPath().forEachIndexed { i, path ->  println("current path for " +i + " is " + path.toString())}
+        task.executeTask()
+        task.getResult().forEachIndexed { i, path ->  println("current path for " +i + " is " + path.toString())}
     }
 }

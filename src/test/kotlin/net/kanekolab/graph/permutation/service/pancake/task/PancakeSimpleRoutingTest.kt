@@ -18,8 +18,8 @@ class PancakeSimpleRoutingTest {
         var destinationNode = graph.getNodeById("123456789")
         var path: Path = Path(soureNode)
         var pancakeSimpleRouting = PancakeSimpleRouting(path,destinationNode)
-        pancakeSimpleRouting.run()
-        println(pancakeSimpleRouting.getPath())
+        pancakeSimpleRouting.executeTask()
+        println(pancakeSimpleRouting.getResult())
     }
 
 }

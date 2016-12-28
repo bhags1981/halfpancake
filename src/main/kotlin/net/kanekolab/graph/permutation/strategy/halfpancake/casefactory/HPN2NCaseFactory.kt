@@ -1,6 +1,6 @@
 package net.kanekolab.graph.permutation.strategy.halfpancake.casefactory
 
-import net.kanekolab.graph.permutation.model.Permutation
+import net.kanekolab.graph.permutation.service.PermutationService
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
 import net.kanekolab.graph.permutation.vo.halfpancake.HPCase

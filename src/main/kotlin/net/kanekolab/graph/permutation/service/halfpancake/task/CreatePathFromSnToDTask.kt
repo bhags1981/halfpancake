@@ -3,6 +3,7 @@ package net.kanekolab.graph.permutation.service.halfpancake.task
 import net.kanekolab.graph.permutation.model.UniquePath
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
+import net.kanekolab.graph.permutation.service.ServiceTask
 import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
 
 /**
@@ -10,12 +11,12 @@ import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
  * Create path from s^n to d without use P(d) and P(s)
  * Created by bhags on 2016/11/24.
  */
-class CreatePathFromSnToDTask(graph:HalfPancakeGraph, path:UniquePath, destinationNode:HalfPancakeNode) {
+class CreatePathFromSnToDTask(graph:HalfPancakeGraph, path:UniquePath, destinationNode:HalfPancakeNode) : ServiceTask<UniquePath>{
     private val _graph:HalfPancakeGraph = graph
     private val _path:UniquePath = path
     private val _destinationNode:HalfPancakeNode = destinationNode
 
-    fun run(){
+    override fun executeTask(){
         var sourceNode = _path.getLastNode()
 
         //Do (S^n)^2
@@ -39,12 +40,13 @@ class CreatePathFromSnToDTask(graph:HalfPancakeGraph, path:UniquePath, destinati
         //Do n
         var intermediateNode4 = intermediateNode3.getNthNeighbor(_graph.getDegree())
         var pancakeSimpleRouting = PancakeSimpleRouting(_path,intermediateNode4)
-        pancakeSimpleRouting.run()
+        pancakeSimpleRouting.executeTask()
 
         _path.addNode(intermediateNode3)
         _path.addNode(intermediateNode2)
+        _path.addNode(_destinationNode)
     }
-    fun getPath():UniquePath{
+    override fun getResult():UniquePath{
         return _path
     }
 }

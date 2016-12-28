@@ -4,16 +4,17 @@ import net.kanekolab.graph.permutation.model.Node
 import net.kanekolab.graph.permutation.model.Path
 import net.kanekolab.graph.permutation.model.PrefixReversalOperator
 import net.kanekolab.graph.permutation.model.UniquePath
+import net.kanekolab.graph.permutation.service.ServiceTask
 
 /**
  * Created by bhags on 2016/11/24.
  */
-class PancakeSimpleRouting (path: Path, destinationNode:Node ){
+class PancakeSimpleRouting (path: Path, destinationNode:Node ) : ServiceTask<Path>{
     private var _sourceNode:Node = path.getLastNode()
     private var _destinationNode:Node = destinationNode
     private var _path:Path = path
 
-    fun run(){
+    override fun executeTask(){
         //Find index for reverse
         var currentNeighborNode = _sourceNode
         for(i in _destinationNode.getId().length - 1 downTo 1){
@@ -39,7 +40,7 @@ class PancakeSimpleRouting (path: Path, destinationNode:Node ){
             }
         }
     }
-    fun getPath():Path{
+    override fun getResult():Path{
         return _path
     }
 }

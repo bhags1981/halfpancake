@@ -1,6 +1,6 @@
 package net.kanekolab.graph.permutation
 
-import net.kanekolab.graph.permutation.model.Permutation
+import net.kanekolab.graph.permutation.service.PermutationService
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 
 /**

@@ -19,8 +19,8 @@ class CreatePathFromSnToDTaskTest {
         var uniquePath = UniquePath(sourceNode)
         uniquePath.addNode(sourceNode.getNthNeighbor(graph.getDegree()))
         var createPathFromSnToD = CreatePathFromSnToDTask(graph,uniquePath,destinationNode)
-        createPathFromSnToD.run()
-        println(createPathFromSnToD.getPath().toString())
+        createPathFromSnToD.executeTask()
+        println(createPathFromSnToD.getResult().toString())
 
     }
 

@@ -8,7 +8,7 @@ import net.kanekolab.graph.permutation.strategy.halfpancake.HPStrategy
 /**
  * Created by bhags on 2016/11/22.
  */
-class HPDijointPathService(halfPancakeGraph:HalfPancakeGraph) : DisjointPathService(regularGraph = halfPancakeGraph){
+class HPDisjointPathService(halfPancakeGraph:HalfPancakeGraph) : DisjointPathService(regularGraph = halfPancakeGraph){
 
     override  fun initProblemN2N(sourceNode: Node, destinationNode: Node){
         val strategy:HPStrategy = HPStrategy(graph as HalfPancakeGraph)
