@@ -12,7 +12,7 @@ open class Path (sourceNode: Node) {
 
 
 
-    open fun addNode(intermediateNode: Node){
+    open fun addNode(intermediateNode: Node) : Path{
         //Check unique for all path
         UsedNodes.addNodeId(intermediateNode.getId())
         _pathList.add(intermediateNode.getId())
@@ -24,6 +24,7 @@ open class Path (sourceNode: Node) {
         }
 
         _destinationNode = intermediateNode
+        return this
     }
 
     override fun toString():String{

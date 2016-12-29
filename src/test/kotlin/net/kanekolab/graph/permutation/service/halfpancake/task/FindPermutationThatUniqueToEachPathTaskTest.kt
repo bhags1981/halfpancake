@@ -1,6 +1,5 @@
 package net.kanekolab.graph.permutation.service.halfpancake.task
 
-import org.junit.Assert
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -11,21 +10,20 @@ import org.junit.Assert.*
 class FindPermutationThatUniqueToEachPathTaskTest {
     @Test
     fun executeTask() {
+
+        //Must have same kind of symbols
+        // Ex 123 and 321 is OK
+        // Ex 123 and 324 is not OK
         var defaultPermutation = "a3421"
-        var permutationB = "214A3"
-        var permutationC = "31A42"
-        var findPermutationThatUniqueToEachPathTask = FindPermutationsThatUniqueToEachPathTask(defaultPermutation,permutationB,permutationC)
-        findPermutationThatUniqueToEachPathTask.executeTask()
-        var permutations = findPermutationThatUniqueToEachPathTask.getResult()
+        var defaultPermutation2 = "412a3"
 
-        //Check Constrains.
-        assertFalse(permutations.contains(defaultPermutation))
-        assertFalse(permutations.contains(permutationB))
-        assertFalse(permutations.contains(permutationC))
-        assertFalse(permutations.contains(permutationB.reversed()))
-        assertFalse(permutations.contains(permutationC.reversed()))
-        println(permutations)
 
+
+        var permutations  = CreateSortedPermutationsTask(defaultPermutation).executeTask().getResult()
+        var permutations2 = CreateSortedPermutationsTask(defaultPermutation2).executeTask().getResult()
+
+        //Must be same order between permutations and permutations2.
+        assertTrue(permutations.equals(permutations2))
 
     }
 

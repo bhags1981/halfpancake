@@ -35,12 +35,9 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         var path:UniquePath = UniquePath(sourceNode!!)
         path.addNode(intermediateNode)
         var isLeftCenter:Boolean = false
-        var task: CreatePathForOrderedPrefixTask = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter)
-        task.executeTask();
-        var newPath = task.getResult()
+        var newPath = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter).executeTask().getResult()
 
-        //todo
-        //Create assertion.
+        //todo How to verify the path?
         println(newPath.toString())
     }
 
@@ -56,12 +53,10 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         var path:UniquePath = UniquePath(sourceNode!!)
         path.addNode(intermediateNode)
         var isLeftCenter:Boolean = true
-        var task: CreatePathForOrderedPrefixTask = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter)
-        task.executeTask();
-        var newPath = task.getResult()
 
-        //todo
-        //Create assertion.
+        var newPath = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter).executeTask().getResult()
+
+        //todo How to verify the path?
         println(newPath.toString())
     }
 
@@ -76,12 +71,9 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         var path:UniquePath = UniquePath(sourceNode!!)
         path.addNode(intermediateNode)
         var isLeftCenter:Boolean = false
-        var task: CreatePathForOrderedPrefixTask = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter)
-        task.executeTask();
-        var newPath = task.getResult()
+        var newPath = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter).executeTask().getResult()
 
-        //todo
-        //Create assertion.
+        //todo How to verify the path?
         println(newPath.toString())
     }
 }

@@ -27,11 +27,11 @@ class HPStrategy (hpGraph:HalfPancakeGraph): Strategy (regularGraph = hpGraph){
 
 
 
-    override fun init(currentGraph: RegularGraph, sourceNode: Node, destinationNode: List<Node> ){
+    override fun init(graph : RegularGraph, sourceNode: Node, destinationNode: List<Node> ){
         throw Exception("You must implements strategy for problem of Node to Set disjoint paths.")
     }
 
-    override fun init(currentGraph: RegularGraph, sourceNode: List<Node>, destinationNode: List<Node> ){
+    override fun init(graph  : RegularGraph, sourceNode: List<Node>, destinationNode: List<Node> ){
         throw Exception("You must implements strategy for problem of Set to Set disjoint paths.")
     }
 }

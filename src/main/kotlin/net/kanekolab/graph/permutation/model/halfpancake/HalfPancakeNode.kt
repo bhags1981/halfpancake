@@ -47,4 +47,32 @@ class HalfPancakeNode(id:String, degree:Int) : Node(id,degree){
     fun getHalfPosition():Int{
         return _degree
     }
+
+    //For a node a = (a1,a2,...,an) in an n-half pancake graph, let F(a) = {a1,a2,...,an−n˜}
+    fun getFrontString():String{
+        return _id.substring(0,(_id.length - _degree))
+    }
+    //For a node a = (a1,a2,...,an) in an n-half pancake graph,R(a) = {an˜+1,an˜+2,...,an}
+    fun getRearString():String{
+        return _id.substring(_degree)
+    }
+
+    fun getCenterString():String{
+        if(_id.length % 2 == 1)
+            return _id.substring(getHalfPosition()-1,getHalfPosition())
+        else
+            return _id.substring(getHalfPosition()-2,getHalfPosition());
+    }
+
+    fun getFrontCenterString():String{
+        return _id.substring(0,getHalfPosition())
+    }
+
+    fun getCenterRearString():String{
+        if(_id.length % 2 == 1)
+            return _id.substring(getHalfPosition()-1)
+        else
+            return _id.substring(getHalfPosition()-2);
+    }
+
 }

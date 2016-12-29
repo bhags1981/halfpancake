@@ -15,6 +15,10 @@ abstract class Node(id:String, degree:Int):Comparable<Node>{
         return _degree;
     }
 
+    fun getLength():Int{
+        return _id.length
+    }
+
     override fun compareTo(other: Node):Int{
         return (other.getId().compareTo(this.getId()))
     }

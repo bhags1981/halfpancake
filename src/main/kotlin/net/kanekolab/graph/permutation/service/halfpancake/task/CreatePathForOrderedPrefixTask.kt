@@ -12,14 +12,14 @@ import net.kanekolab.graph.permutation.service.ServiceTask
  * index must be ~n (or ~n - 1  when n is even)
  * Created by bhags on 2016/11/23.
  */
-class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, isLeftCenter:Boolean = false) : ServiceTask<UniquePath> {
+class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, isLeftCenter:Boolean = false) : ServiceTask<CreatePathForOrderedPrefixTask,UniquePath> {
     private val _graph:HalfPancakeGraph = graph
     private val _path:UniquePath = path
     private var _centerReverseIndex:Int = graph.getDegree()
     private val _isLeftCenter:Boolean = isLeftCenter
     private var _makeUniquePermutationNeighborNumber = 1
 
-    override fun executeTask(){
+    override fun executeTask():CreatePathForOrderedPrefixTask{
         if(_graph.isEvenDimension()){
             if(!_isLeftCenter)
                 runEvenType1()
@@ -28,6 +28,7 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
         }else {
             runOdd()
         }
+        return this;
     }
 
     override fun getResult():UniquePath{

@@ -18,9 +18,9 @@ class CreatePathFromSnToDTaskTest {
         var destinationNode = graph.getNodeById("1234567") as HalfPancakeNode
         var uniquePath = UniquePath(sourceNode)
         uniquePath.addNode(sourceNode.getNthNeighbor(graph.getDegree()))
-        var createPathFromSnToD = CreatePathFromSnToDTask(graph,uniquePath,destinationNode)
-        createPathFromSnToD.executeTask()
-        println(createPathFromSnToD.getResult().toString())
+
+        //Todo : How to verify path?
+        println(CreatePathFromSnToDTask(graph,uniquePath,destinationNode).executeTask().getResult().toString())
 
     }
 

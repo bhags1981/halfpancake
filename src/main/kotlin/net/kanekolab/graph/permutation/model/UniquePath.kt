@@ -8,10 +8,11 @@ package net.kanekolab.graph.permutation.model
  */
 class UniquePath(sourceNode: Node) : Path (sourceNode = sourceNode){
 
-    override fun addNode(intermediateNode:Node){
+    override fun addNode(intermediateNode:Node): Path{
         if(_pathList.contains(intermediateNode.getId())){
             throw Exception("The node  "+intermediateNode.getId()+" already exists in the path.")
         }
-        super.addNode(intermediateNode)
+        return super.addNode(intermediateNode)
     }
+
 }

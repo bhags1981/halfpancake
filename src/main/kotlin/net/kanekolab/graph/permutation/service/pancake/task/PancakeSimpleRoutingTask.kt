@@ -1,20 +1,18 @@
 package net.kanekolab.graph.permutation.service.pancake.task
 
 import net.kanekolab.graph.permutation.model.Node
-import net.kanekolab.graph.permutation.model.Path
-import net.kanekolab.graph.permutation.model.PrefixReversalOperator
 import net.kanekolab.graph.permutation.model.UniquePath
 import net.kanekolab.graph.permutation.service.ServiceTask
 
 /**
  * Created by bhags on 2016/11/24.
  */
-class PancakeSimpleRouting (path: Path, destinationNode:Node ) : ServiceTask<Path>{
+class PancakeSimpleRoutingTask(path: UniquePath, destinationNode:Node ) : ServiceTask<PancakeSimpleRoutingTask,UniquePath>{
     private var _sourceNode:Node = path.getLastNode()
     private var _destinationNode:Node = destinationNode
-    private var _path:Path = path
+    private var _path:UniquePath = path
 
-    override fun executeTask(){
+    override fun executeTask():PancakeSimpleRoutingTask{
         //Find index for reverse
         var currentNeighborNode = _sourceNode
         for(i in _destinationNode.getId().length - 1 downTo 1){
@@ -31,7 +29,7 @@ class PancakeSimpleRouting (path: Path, destinationNode:Node ) : ServiceTask<Pat
                     }
 
                     if(currentNeighborNode.getId().equals(_destinationNode.getId()))
-                        return;
+                        return this
 
                     currentNeighborNode = currentNeighborNode.getNthNeighbor(i)
                     _path.addNode(currentNeighborNode)
@@ -39,8 +37,9 @@ class PancakeSimpleRouting (path: Path, destinationNode:Node ) : ServiceTask<Pat
                 }
             }
         }
+        return this
     }
-    override fun getResult():Path{
+    override fun getResult():UniquePath{
         return _path
     }
 }

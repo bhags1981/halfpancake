@@ -14,8 +14,10 @@ class CreatePathToAllNeighborTaskTest {
     fun createPath() {
         var graph:HalfPancakeGraph = HalfPancakeGraph(7)
         var sourceNode: Node = graph.getNodeById("1234567")
-        var task:CreatePathToAllNeighborTask = CreatePathToAllNeighborTask(graph,sourceNode)
-        task.executeTask()
-        task.getResult().forEachIndexed { i, path ->  println("current path for " +i + " is " + path.toString())}
+
+        //Todo How to check neighbor nodes?
+        CreatePathToAllNeighborTask(graph,sourceNode).executeTask().getResult().forEachIndexed {
+            i, path ->  println("current path for " +i + " is " + path.toString())
+        }
     }
 }
