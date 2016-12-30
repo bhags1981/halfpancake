@@ -10,15 +10,15 @@ import org.junit.Assert.*
  * Created by bhags on 2016/12/29.
  */
 class HPRestrictedRoutingServiceTest {
-    //@Test
+    @Test
     fun findUniquePathForOddCaseStep1() {
         var dimension = 7
         var graph = HalfPancakeGraph(dimension)
-        var sourceNode = graph.getNodeById("3241576")
-        var destinationNode = graph.getNodeById("2134576")
-        var hpRestrictedRouting = HPRestrictedRoutingService(graph)
-        hpRestrictedRouting.setSourceNode(sourceNode as HalfPancakeNode)
-        hpRestrictedRouting.setDestinationNode(destinationNode as HalfPancakeNode)
+        var pathUniqueIdentifier : Int = 0
+
+        var sourceNode = graph.getNodeById("3241576") as HalfPancakeNode
+        var destinationNode = graph.getNodeById("2134576") as HalfPancakeNode
+        var hpRestrictedRouting = HPRestrictedRoutingService(graph,pathUniqueIdentifier,sourceNode,destinationNode)
         hpRestrictedRouting.findUniquePath()
         print(hpRestrictedRouting.getCurrentPath())
         print(hpRestrictedRouting.getCurrentLog().getLog())
@@ -28,12 +28,23 @@ class HPRestrictedRoutingServiceTest {
     fun findUniquePathForOddCaseStep3(){
         var dimension = 9
         var graph = HalfPancakeGraph(dimension)
-        var sourceNode = graph.getNodeById("693872451")
-        var destinationNode = graph.getNodeById("123456789")
-        var hpRestrictedRouting = HPRestrictedRoutingService(graph)
+        var pathUniqueIdentifier : Int = 0
 
-        hpRestrictedRouting.setSourceNode(sourceNode as HalfPancakeNode)
-        hpRestrictedRouting.setDestinationNode(destinationNode as HalfPancakeNode)
+        var sourceNode = graph.getNodeById("693872451") as HalfPancakeNode
+        var destinationNode = graph.getNodeById("123456789") as HalfPancakeNode
+        var hpRestrictedRouting = HPRestrictedRoutingService(graph,pathUniqueIdentifier,sourceNode,destinationNode)
+        hpRestrictedRouting.findUniquePath()
+        println(hpRestrictedRouting.getCurrentLog().getLog())
+    }
+
+    @Test
+    fun findUniquePathForOddCaseStep45(){
+        var dimension = 7
+        var graph = HalfPancakeGraph(dimension)
+        var pathUniqueIdentifier : Int = 0
+        var sourceNode = graph.getNodeById("5612347") as HalfPancakeNode
+        var destinationNode = graph.getNodeById("1234567") as HalfPancakeNode
+        var hpRestrictedRouting = HPRestrictedRoutingService(graph,pathUniqueIdentifier,sourceNode,destinationNode)
         hpRestrictedRouting.findUniquePath()
         println(hpRestrictedRouting.getCurrentLog().getLog())
     }

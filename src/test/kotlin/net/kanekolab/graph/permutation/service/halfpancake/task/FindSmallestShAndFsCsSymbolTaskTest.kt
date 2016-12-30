@@ -9,15 +9,14 @@ import org.junit.Assert.*
 /**
  * Created by bhags on 2016/12/30.
  */
-class FindShElementTaskTest {
+class FindSmallestShAndFsCsSymbolTaskTest {
     @Test
-    fun testFindS2Node() {
+    fun getResult() {
         var graph = HalfPancakeGraph(7)
-        var sourceNode = graph.getNodeById("2765431") as HalfPancakeNode
+        var sourceNode = graph.getNodeById("5612347") as HalfPancakeNode
         var destinationNode = graph.getNodeById("1234567") as HalfPancakeNode
-        var sh = FindS2NodeTask(graph,sourceNode,destinationNode).executeTask().getResult()
-        assertTrue(sh.getId().equals("7652431"))
-
+        var result = FindSmallestShNotInRdAndFsCsSymbolTask(graph,sourceNode,destinationNode).executeTask().getResult()
+        assertTrue(result.first.equals('1')&&result.second.equals("562"))
     }
 
 }

@@ -10,8 +10,6 @@ open class Path (sourceNode: Node) {
     protected  var _pathList:MutableList<String> = mutableListOf(sourceNode.getId())
     protected  var _destinationNode: Node = sourceNode
 
-
-
     open fun addNode(intermediateNode: Node) : Path{
         //Check unique for all path
         UsedNodes.addNodeId(intermediateNode.getId())
@@ -24,6 +22,12 @@ open class Path (sourceNode: Node) {
         }
 
         _destinationNode = intermediateNode
+        return this
+    }
+
+    open fun addPath(intermediatePath: Path) : Path{
+        _pathList.addAll(intermediatePath.getList())
+        _destinationNode = intermediatePath.getLastNode()
         return this
     }
 

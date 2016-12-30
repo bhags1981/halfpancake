@@ -14,9 +14,9 @@ fun main(args: Array<String>) {
 //    }
 
     var halfPancakeGraph = HalfPancakeGraph(dimension  =  5)
-    var vertex = halfPancakeGraph.getNodeById("12345")
+    var node = halfPancakeGraph.getNodeById("12345")
     for(i in 1.. halfPancakeGraph.getDegree()){
-        var neighbor = vertex.getNthNeighbor(i)
+        var neighbor = node.getNthNeighbor(i)
         println(neighbor.getId())
     }
 

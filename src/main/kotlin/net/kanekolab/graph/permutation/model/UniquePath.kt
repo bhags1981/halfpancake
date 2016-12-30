@@ -10,7 +10,8 @@ class UniquePath(sourceNode: Node) : Path (sourceNode = sourceNode){
 
     override fun addNode(intermediateNode:Node): Path{
         if(_pathList.contains(intermediateNode.getId())){
-            throw Exception("The node  "+intermediateNode.getId()+" already exists in the path.")
+            println("The node  "+intermediateNode.getId()+" already exists in the path.")
+            //throw Exception("The node  "+intermediateNode.getId()+" already exists in the path.")
         }
         return super.addNode(intermediateNode)
     }

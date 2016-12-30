@@ -8,6 +8,7 @@ object UsedNodes {
     fun addNodeId(nodeId:String){
         if(nodeMap.containsKey(nodeId))
             throw Exception("Node id " + nodeId + " is already used.")
+            //println("Node id " + nodeId + " is already used.")
         nodeMap.put(nodeId,nodeId)
     }
 }
