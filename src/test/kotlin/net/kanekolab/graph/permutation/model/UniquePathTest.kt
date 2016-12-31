@@ -17,7 +17,7 @@ class UniquePathTest {
         var sourceNode = HalfPancakeNode("12345",graph.getDegree())
         var intermediateNode = HalfPancakeNode("21345",graph.getDegree())
         var uniquePath = UniquePath(sourceNode)
-        uniquePath.addNode(intermediateNode)
+        uniquePath.appendNode(intermediateNode)
     }
 
 
@@ -28,7 +28,7 @@ class UniquePathTest {
         var sourceNode = HalfPancakeNode("12345",graph.getDegree())
         var notUniqueNode = HalfPancakeNode("12345",graph.getDegree())
         var uniquePath = UniquePath(sourceNode)
-        uniquePath.addNode(notUniqueNode)
+        uniquePath.appendNode(notUniqueNode)
     }
 
     @Test (expected = Exception::class)
@@ -40,7 +40,7 @@ class UniquePathTest {
         var uniquePath = UniquePath(sourceNode)
 
         //Exception will not be thrown when Config.debugMode is false.
-        uniquePath.addNode(notNeighborNode)
+        uniquePath.appendNode(notNeighborNode)
 
     }
 }

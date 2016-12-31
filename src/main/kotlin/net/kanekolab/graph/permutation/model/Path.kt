@@ -8,10 +8,37 @@ import net.kanekolab.graph.permutation.model.Node
  */
 open class Path (sourceNode: Node) {
     protected  var _pathList:MutableList<String> = mutableListOf(sourceNode.getId())
-    protected  var _destinationNode: Node = sourceNode
+    protected  var _destinationNode = sourceNode
+    protected  var _sourceNode = sourceNode
 
-    open fun addNode(intermediateNode: Node) : Path{
-        //Check unique for all path
+    open fun prependNode(intermediateNode: Node) : Path{
+        UsedNodes.addNodeId(intermediateNode.getId())
+        _pathList.add(0,intermediateNode.getId())
+        //isNeighborが O(n)であるため
+        //Debug modeが trueの場合のみ使用。a
+        if(Config.debugMode && !_sourceNode.isNeighbor(intermediateNode)){
+            throw Exception("The node " + intermediateNode.getId() + " is not neighbor node of " + _sourceNode.getId())
+        }
+        _sourceNode = intermediateNode
+        return this
+    }
+
+    open fun prependPath(intermediatePath: Path) : Path{
+        //Check path is neighbor
+        //isNeighborが O(n)であるため
+        //Debug modeが trueの場合のみ使用。a
+        if(Config.debugMode && !intermediatePath.getLastNode().isNeighbor(_sourceNode)){
+            throw Exception("The node " + intermediatePath.getLastNode().getId() + " is not neighbor node of " + _sourceNode.getId())
+        }
+        _sourceNode = intermediatePath.getFirstNode()
+        _pathList.addAll(0,intermediatePath.getList())
+        return this
+    }
+
+
+    open fun appendNode(intermediateNode: Node) : Path{
+
+        //Todo create new logic for check UsedNodes
         UsedNodes.addNodeId(intermediateNode.getId())
         _pathList.add(intermediateNode.getId())
 
@@ -25,16 +52,30 @@ open class Path (sourceNode: Node) {
         return this
     }
 
-    open fun addPath(intermediatePath: Path) : Path{
+    open fun appendPath(intermediatePath: Path) : Path{
+        if(Config.debugMode && !intermediatePath.getFirstNode().isNeighbor(_destinationNode)){
+            throw Exception("The node " + intermediatePath.getFirstNode().getId() + " is not neighbor node of " + _destinationNode.getId())
+        }
         _pathList.addAll(intermediatePath.getList())
         _destinationNode = intermediatePath.getLastNode()
         return this
     }
 
+    open fun appendOmittedPathWithDescription(omittedPathTerminalNode: Node, description:String):Path{
+        _pathList.add(description)
+        _pathList.add(omittedPathTerminalNode.getId())
+        _destinationNode = omittedPathTerminalNode
+        return this
+    }
+
+
     override fun toString():String{
         return _pathList.toString()
     }
 
+    fun getFirstNode():Node{
+        return _sourceNode
+    }
     fun getLastNode():Node{
         return _destinationNode
     }

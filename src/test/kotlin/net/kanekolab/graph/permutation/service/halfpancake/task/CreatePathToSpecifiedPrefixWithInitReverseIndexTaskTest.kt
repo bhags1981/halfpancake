@@ -33,7 +33,7 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         //Check ~n-1
         var intermediateNode:HalfPancakeNode = sourceNode!!.getNthNeighbor(graph!!.getDegree() - 1) as HalfPancakeNode
         var path:UniquePath = UniquePath(sourceNode!!)
-        path.addNode(intermediateNode)
+        path.appendNode(intermediateNode)
         var isLeftCenter:Boolean = false
         var newPath = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter).executeTask().getResult()
 
@@ -51,7 +51,7 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         //Check ~n-1
         var intermediateNode:HalfPancakeNode = sourceNode!!.getNthNeighbor(graph!!.getDegree() - 2) as HalfPancakeNode
         var path:UniquePath = UniquePath(sourceNode!!)
-        path.addNode(intermediateNode)
+        path.appendNode(intermediateNode)
         var isLeftCenter:Boolean = true
 
         var newPath = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter).executeTask().getResult()
@@ -69,7 +69,7 @@ class CreatePathToSpecifiedPrefixWithInitReverseIndexTaskTest{
         //Check ~n-1
         var intermediateNode:HalfPancakeNode = sourceNode!!.getNthNeighbor(graph!!.getDegree() - 1) as HalfPancakeNode
         var path:UniquePath = UniquePath(sourceNode!!)
-        path.addNode(intermediateNode)
+        path.appendNode(intermediateNode)
         var isLeftCenter:Boolean = false
         var newPath = CreatePathForOrderedPrefixTask(graph!!,path,isLeftCenter).executeTask().getResult()
 

@@ -9,7 +9,8 @@ class HPCase (caseType:HPCaseType, prefixPositionK:Int) : ProblemCase(){
     val caseType = caseType
     val prefixPositionK = prefixPositionK
 
+
     override fun toString():String{
-        return "Case : "+caseType.name + " position k : " + prefixPositionK
+        return "Case : "+ caseType.name + " position k : " + prefixPositionK
     }
 }

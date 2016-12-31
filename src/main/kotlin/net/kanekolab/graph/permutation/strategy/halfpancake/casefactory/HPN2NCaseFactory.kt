@@ -19,7 +19,6 @@ class HPN2NCaseFactory(graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, des
 
         //case of even
         if (_graph.isEvenDimension()) {
-
             //case of odd
             return createCaseOfEven()
         } else {

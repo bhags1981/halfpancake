@@ -25,7 +25,7 @@ class PancakeSimpleRoutingTask(path: UniquePath, destinationNode:Node ) : Servic
 
                     if(j!=0) {
                         currentNeighborNode = currentNeighborNode.getNthNeighbor(j)
-                        _path.addNode(currentNeighborNode)
+                        _path.appendNode(currentNeighborNode)
                     }
 
                     if(currentNeighborNode.getId().equals(_destinationNode.getId()))
@@ -37,7 +37,7 @@ class PancakeSimpleRoutingTask(path: UniquePath, destinationNode:Node ) : Servic
                         println("SOURCE " + _sourceNode)
                         println("DEST " + _destinationNode)
                     }
-                    _path.addNode(currentNeighborNode)
+                    _path.appendNode(currentNeighborNode)
                     break
                 }
             }

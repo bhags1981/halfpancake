@@ -19,7 +19,7 @@ class CreatePathToAllNeighborTask (halfPancakeGraph: HalfPancakeGraph, sourceNod
     override fun executeTask():CreatePathToAllNeighborTask{
         for( i in 1.._graph.getDegree()){
             var path = UniquePath(_sourceNode)
-            path.addNode(_sourceNode.getNthNeighbor(i))
+            path.appendNode(_sourceNode.getNthNeighbor(i))
             _pathList.add(path)
         }
         return this

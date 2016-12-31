@@ -126,10 +126,10 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
                     //select path s ~>  (dn,dn−1,...,dn˜+1,sh,sn˜+1,sn˜+2,...,sn) def = s′ in P(s),
                     PancakeSimpleRoutingTask(UniquePath(sourceNode),s2Node).executeTask().getResult()
                         //edge s′ → s′^(n)
-                        .addNode(s2Node.getNthNeighbor(s2Node.getDegree())) as UniquePath
+                        .appendNode(s2Node.getNthNeighbor(s2Node.getDegree())) as UniquePath
 
             //path s′^(n) ~> d in P(d), and terminate.
-            _currentPath.addPath(intermediatePath)
+            _currentPath.appendPath(intermediatePath)
             _currentPath = PancakeSimpleRoutingTask(_currentPath, destinationNode).executeTask().getResult()
             _isTerminated = true
             return
@@ -159,7 +159,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
 
         // Select edge s2 → s2^(n)
         var nextSourceNode = s2.getNthNeighbor(s2.getDegree()) as HalfPancakeNode
-        _currentPath.addNode(nextSourceNode)
+        _currentPath.appendNode(nextSourceNode)
         _log.append("Added Edge " + nextSourceNode.getId())
         findUniquePathForOddStep5(nextSourceNode,destinationNode);
 
@@ -180,7 +180,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
         _currentPath = PancakeSimpleRoutingTask(_currentPath,s2).executeTask().getResult()
         // Select edge s2 → s2^(n)
         var nextSourceNode = s2.getNthNeighbor(s2.getDegree()) as HalfPancakeNode
-        _currentPath.addNode(nextSourceNode)
+        _currentPath.appendNode(nextSourceNode)
         _log.append("Added Edge " + nextSourceNode.getId())
 
         findUniquePathForOddStep3(nextSourceNode,destinationNode)

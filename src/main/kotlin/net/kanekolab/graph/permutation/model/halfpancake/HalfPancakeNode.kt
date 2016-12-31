@@ -75,4 +75,16 @@ class HalfPancakeNode(id:String, degree:Int) : Node(id,degree){
             return _id.substring(getHalfPosition()-2);
     }
 
+    fun getFinalNeighbor():HalfPancakeNode{
+        return getNthNeighbor(_degree) as HalfPancakeNode
+    }
+
+    fun getIthPrefixReversalNeighbor(i:Int):HalfPancakeNode{
+        if(i <= _degree)
+            return getNthNeighbor( i - 1) as HalfPancakeNode
+        if(i == _id.length)
+            return getFinalNeighbor()
+        throw IndexOutOfBoundsException("Current index " + i + " is out of index range")
+    }
+
 }

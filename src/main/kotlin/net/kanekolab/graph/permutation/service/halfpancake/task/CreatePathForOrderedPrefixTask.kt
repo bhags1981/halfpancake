@@ -41,12 +41,12 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
 
         //Reverse on 2. Reverse on 2 is the first neighbor node.
         var neighborNode : HalfPancakeNode = sourceNode.getNthNeighbor(_makeUniquePermutationNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
 
         var selectedNeighborNumber = _centerReverseIndex - 1
         //Reverse on ~n or ~n - 1
         neighborNode = neighborNode.getNthNeighbor(selectedNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
     }
 
     fun runEvenType2(){
@@ -55,20 +55,20 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
 
         //Reverse on 2. Reverse on 2 is the first neighbor node.
         var neighborNode : HalfPancakeNode = sourceNode.getNthNeighbor(_makeUniquePermutationNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
 
         //Reverse on  ~n - 1
         neighborNode = neighborNode.getNthNeighbor(selectedNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
 
         //Reverse on  ~n - 2
         neighborNode = neighborNode.getNthNeighbor(selectedNeighborNumber - 1) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
 
 
         //Reverse on ~n-1
         neighborNode = neighborNode.getNthNeighbor(selectedNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
     }
 
 
@@ -80,23 +80,23 @@ class CreatePathForOrderedPrefixTask(graph:HalfPancakeGraph, path:UniquePath, is
 
         //Reverse on 2. Reverse on 2 is the first neighbor node.
         var neighborNode : HalfPancakeNode = sourceNode.getNthNeighbor(_makeUniquePermutationNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
 
         //Reverse on ~n or ~n - 1
         neighborNode = neighborNode.getNthNeighbor(selectedNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
 
         //Reverse on 2. Revers on 2 is the first neighbor node.
         neighborNode = neighborNode.getNthNeighbor(_makeUniquePermutationNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
 
         //Reverse on ~n-1
         neighborNode = neighborNode.getNthNeighbor(selectedNeighborNumber - 1 ) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
 
         //Reverse on ~n
         neighborNode = neighborNode.getNthNeighbor(selectedNeighborNumber) as HalfPancakeNode
-        _path.addNode(neighborNode)
+        _path.appendNode(neighborNode)
     }
 
 

@@ -8,7 +8,7 @@ import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
 
 /**
  * Use for Case 1-1 (d ∈ P(s)) step 2.
- * Create path from s^n to d without use P(d) and P(s)
+ * Step 2) Select path r1: s → s(n) → s(n,2) → s(n,2,n) ~> d(n,2,n) →d(n,2) →d(n) →d. See Figure 2.
  * Created by bhags on 2016/11/24.
  */
 class CreatePathFromSnToDTask(graph:HalfPancakeGraph, path:UniquePath, destinationNode:HalfPancakeNode) : ServiceTask<CreatePathFromSnToDTask,UniquePath>{
@@ -19,14 +19,18 @@ class CreatePathFromSnToDTask(graph:HalfPancakeGraph, path:UniquePath, destinati
     override fun executeTask() : CreatePathFromSnToDTask{
         var sourceNode = _path.getLastNode()
 
+        //Do (S^n)
+        var intermediateNode = sourceNode.getNthNeighbor(sourceNode.getDegree())
+        _path.appendNode(intermediateNode)
+
         //Do (S^n)^2
-        var intermediateNode = sourceNode.getNthNeighbor(1)
-        _path.addNode(intermediateNode)
+        intermediateNode = intermediateNode.getNthNeighbor(1)
+        _path.appendNode(intermediateNode)
 
 
         //Do ((S^n)^2)^n
         intermediateNode = intermediateNode.getNthNeighbor(_graph.getDegree())
-        _path.addNode(intermediateNode)
+        _path.appendNode(intermediateNode)
 
 
 
@@ -42,9 +46,9 @@ class CreatePathFromSnToDTask(graph:HalfPancakeGraph, path:UniquePath, destinati
         var pancakeSimpleRouting = PancakeSimpleRoutingTask(_path,intermediateNode4)
         pancakeSimpleRouting.executeTask()
 
-        _path.addNode(intermediateNode3)
-        _path.addNode(intermediateNode2)
-        _path.addNode(_destinationNode)
+        _path.appendNode(intermediateNode3)
+        _path.appendNode(intermediateNode2)
+        _path.appendNode(_destinationNode)
         return this
     }
     override fun getResult():UniquePath{
