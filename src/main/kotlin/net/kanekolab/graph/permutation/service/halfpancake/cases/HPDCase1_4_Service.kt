@@ -18,7 +18,7 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
     private var _positionL = -1
     override fun constructDisjointPaths() {
         _logData.append("Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 1-4 service.")
-        step1()
+        step1(_sourceNode,_destinationNode,_positionK)
     }
 
 
@@ -29,14 +29,14 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
      *
      *  Select path r1: s → s(n) , an → a(n) n → a(n,k) n (=d(n))→d where an = (1,2,... ,n−k,n,n−1,... ,n−k+1).
      */
-    private fun step1(){
-        var (isExist,positionL) = CheckCase14Step1ConditionTask(_sourceNode, _destinationNode,_positionK).executeTask().getResult()
+    private fun step1(sourceNode: HalfPancakeNode,destinationNode: HalfPancakeNode,positionK: Int){
+        var (isExist,positionL) = CheckCase14Step1ConditionTask(sourceNode,destinationNode,positionK).executeTask().getResult()
         _logData.append("[Step 1] Is exist position L ? {$positionL} (-1 is false) ")
         if(isExist == true){
             _positionL = positionL
-            step6(_sourceNode,_destinationNode,_positionK,_positionL)
+            step6(sourceNode,destinationNode,positionK,positionL)
         }else{
-            step2(_sourceNode,_destinationNode,_positionK)
+            step2(sourceNode,destinationNode,positionK)
         }
     }
 
