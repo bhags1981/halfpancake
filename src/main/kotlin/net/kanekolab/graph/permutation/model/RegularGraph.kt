@@ -11,4 +11,5 @@ abstract class  RegularGraph constructor(dimension:Int,degree:Int){
     fun getDegree():Int = _degree
     fun getDimension():Int = _dimension
     abstract fun getNodeById(id:String): Node
+    abstract fun getRandomNode() : Node
 }

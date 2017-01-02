@@ -19,6 +19,7 @@ class FindS2NodeTask(currentGraph:HalfPancakeGraph, sourceNode:HalfPancakeNode, 
 
         var rearString = _destinationNode.getRearString()
         _sourceNode.getFrontCenterString().forEach{
+
             element -> run{
                 if(!rearString.contains(element)) {
                     _s2 = _currentGraph.getNodeById(_destinationNode.getRearString().reversed() + element + _sourceNode.getRearString()) as HalfPancakeNode

@@ -5,13 +5,8 @@ import java.util.*
 /**
  * Created by bhags on 2016/12/29.
  */
-class LogData(initMessage:String) {
+object LogData {
     private var _log:String = ""
-
-    init {
-        append(initMessage)
-    }
-
 
     fun append(log:String){
         _log += "[" + System.currentTimeMillis() + "] " + log + "\r\n"
@@ -19,5 +14,9 @@ class LogData(initMessage:String) {
 
     fun getLog():String{
         return _log
+    }
+
+    fun init(){
+        _log = ""
     }
 }

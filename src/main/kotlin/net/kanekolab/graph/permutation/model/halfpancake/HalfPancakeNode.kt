@@ -23,6 +23,10 @@ class HalfPancakeNode(id:String, degree:Int) : Node(id,degree){
         return HalfPancakeNode(neighborId, _degree)
     }
 
+    override fun getNeighborByIndex(index: Int): Node {
+        return getIthPrefixReversalNeighbor(index)
+    }
+    
     override fun isNeighbor(other: Node):Boolean
     {
         for (i in 1.._degree){
@@ -41,6 +45,10 @@ class HalfPancakeNode(id:String, degree:Int) : Node(id,degree){
     override fun getSuffixForSubGraph():String
     {
         return _id.substring(_degree)
+    }
+
+    override fun getNeighborById(index: String): Node {
+        return HalfPancakeNode(index,_degree)
     }
 
 

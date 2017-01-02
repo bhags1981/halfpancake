@@ -2,6 +2,7 @@ package net.kanekolab.graph.permutation.service
 
 import net.kanekolab.graph.permutation.core.Constants
 import java.awt.Dimension
+import java.util.*
 
 /**
  * Created by bhags on 2016/11/20.
@@ -42,5 +43,25 @@ class PermutationService {
             throw Exception("Dimension overflow");
 
         return Constants.maxPermutation.substring(0,Dimension );
+    }
+
+    fun getRandomPermutation(dimension: Int):String{
+        var identity = getIdentifyPermutationForDimension(dimension)
+        var rand = shuffle(identity.toCharArray().toMutableList())
+        var result = ""
+        rand.forEach { char->result=result+char }
+        return result
+
+    }
+
+    private fun <T:Comparable<T>>shuffle(items:MutableList<T>):List<T>{
+        val rg : Random = Random()
+        for (i in 0..items.size - 1) {
+            val randomPosition = rg.nextInt(items.size)
+            val tmp : T = items[i]
+            items[i] = items[randomPosition]
+            items[randomPosition] = tmp
+        }
+        return items
     }
 }

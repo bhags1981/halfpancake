@@ -15,12 +15,6 @@ abstract class HPDCaseService(graph:HalfPancakeGraph,sourceNode:HalfPancakeNode,
     protected var _sourceNode = sourceNode
     protected var _destinationNode = destinationNode
     protected var _disjointPaths = mutableListOf<Path>()
-    protected var _logData = LogData("HPDCaseService Initialized")
     abstract fun constructDisjointPaths()
-    fun getLogData():LogData{
-        return _logData
-    }
-    fun getPaths():List<Path>{
-        return _disjointPaths
-    }
+    fun getPaths():List<Path>{ return _disjointPaths }
 }

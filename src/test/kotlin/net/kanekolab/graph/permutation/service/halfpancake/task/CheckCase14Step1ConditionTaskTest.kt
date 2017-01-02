@@ -14,7 +14,7 @@ class CheckCase14Step1ConditionTaskTest {
     fun executeTask() {
         //Case 1-4 (∃k(< ˜ n) such that s(k,n) ∈ P(d) and s(k,n) ̸= d)
         var graph = HalfPancakeGraph(9)
-        var sourceNode = graph.getNodeById("789654312") as HalfPancakeNode
+        var sourceNode = graph.getNodeById("678951234") as HalfPancakeNode
         var destinationNode = graph.getNodeById("123456789") as HalfPancakeNode
         var positionK = 3
         var (isExistL,positionL) = CheckCase14Step1ConditionTask(sourceNode,destinationNode,positionK).executeTask().getResult()

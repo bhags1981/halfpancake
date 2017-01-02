@@ -1,5 +1,6 @@
 package net.kanekolab.graph.permutation.service.halfpancake.cases
 
+import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.Path
 import net.kanekolab.graph.permutation.model.UniquePath
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
@@ -15,7 +16,7 @@ import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
 class HPDCase1_5_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode) : HPDCaseService(graph,sourceNode,destinationNode){
     private var _positionL = -1
     override fun constructDisjointPaths() {
-        _logData.append("Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 1-5 service.")
+        LogData.append("Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 1-5 service.")
         step1(_sourceNode,_destinationNode)
     }
 
@@ -25,10 +26,10 @@ class HPDCase1_5_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
      */
     private fun step1(sourceNode: HalfPancakeNode,destinationNode: HalfPancakeNode){
         var (isExist,positionL) = CheckCase15Step1ConditionTask(sourceNode, destinationNode).executeTask().getResult()
-        _logData.append("[Step 1] Is exist position L ? {$positionL} (-1 is false) ")
+        LogData.append("[Step 1] Is exist position L ? {$positionL} (-1 is false) ")
         if(isExist == true){
             _positionL = positionL
-            //step7(sourceNode,destinationNode,positionL)
+            step7(sourceNode,positionL)
         }else{
             step2(sourceNode,destinationNode)
         }
@@ -52,24 +53,17 @@ class HPDCase1_5_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             //If s1 = ˜ n, select path r1: s → s(n) , a → a(n) → a(n, ˜ n)(= d(n)) → d where a = (1, ... , ˜ n − 1;n;n − 1, ... , ˜ n).
 
             //s(n)
-            var intermediateNode = sourceNode.getIthPrefixReversalNeighbor(n)
-            pathFromSource.appendNode(intermediateNode)
+            pathFromSource.append(n)
 
 
-            var pathFromDestination = UniquePath(destinationNode)
-            //d(n)
-            var intermediateNode2 = destinationNode.getIthPrefixReversalNeighbor(n)
-            pathFromDestination.prependNode(intermediateNode2)
+            var pathFromDestination =
+                    UniquePath(destinationNode)
+                            .prepend(n)
+                            .prepend(_n)
 
-            //d(n,~n)
-            intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(_n)
-            pathFromDestination.prependNode(intermediateNode2)
-
-            //d(n,~n,n) = a
-            intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(n)
-
+            var nodeA = pathFromDestination.getFirstNode().getNeighborByIndex(n)
             //s(n) ~> a
-            pathFromSource = PancakeSimpleRoutingTask(pathFromSource,intermediateNode2).executeTask().getResult()
+            pathFromSource = PancakeSimpleRoutingTask(pathFromSource,nodeA).executeTask().getResult()
             pathFromSource.appendPath(pathFromDestination)
 
 
@@ -81,62 +75,214 @@ class HPDCase1_5_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             b(n, ˜ n, ˜ n−1, ˜ n−2, ˜ n−1)(= d(n))→d where b = (1;2, ... , ˜ n−1,n, ˜ n+1, ... ,n−1, ˜ n)
             */
             //s(n)
-            var intermediateNode = sourceNode.getIthPrefixReversalNeighbor(n)
-            pathFromSource.appendNode(intermediateNode)
+            pathFromSource.append(n)
 
             //s(n,n-l+1)
-            var pos = (l-_n) + 2
-            intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(pos)
-            pathFromSource.appendNode(intermediateNode)
+            var pos = (n-l) + 1
+
+            if(pos > 1) {
+                pathFromSource.append(pos)
+            }
 
             //s(n,~n-l+1,~n)
-            intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(_n)
-            pathFromSource.appendNode(intermediateNode)
 
-            //s(n,~n-l+1,~n,n)
-            intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(n)
-            pathFromSource.appendNode(intermediateNode)
-
-
+            pathFromSource
+                    .append(_n)
+                    .append(n)
+                    .append(_n)
+                    .append(n)
 
 
+            var pathFromDestination =
+                    UniquePath(destinationNode)
+                            .prepend(n)
+                            .prepend(_n-1)
+                            .prepend(_n-2)
+                            .prepend(_n-1)
+                            .prepend(_n)
 
-            var pathFromDestination = UniquePath(destinationNode)
-
-            //d(n)
-            var intermediateNode2 = destinationNode.getIthPrefixReversalNeighbor(n)
-            pathFromDestination.prependNode(intermediateNode2)
-
-            //d(n,~n-1)
-            intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(_n-1)
-            pathFromDestination.prependNode(intermediateNode2)
-
-            //d(n,~n-1,~n-2)
-            intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(_n-2)
-            pathFromDestination.prependNode(intermediateNode2)
-
-            //d(n,~n-1,~n-2,~n-1)
-            intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(_n-1)
-            pathFromDestination.prependNode(intermediateNode2)
-
-            //d(n,~n-1,~n-2,~n-1,~n)
-            intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(_n)
-            pathFromDestination.prependNode(intermediateNode2)
-
-            //d(n,~n-1,~n-2,~n-1,~n,n) = b
-            intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(n)
+            var nodeB = pathFromDestination.getFirstNode().getNeighborByIndex(n)
 
             //s(n,~n-l+1,~n,n) ~> b
-            pathFromSource = PancakeSimpleRoutingTask(pathFromSource,intermediateNode2).executeTask().getResult()
+            pathFromSource = PancakeSimpleRoutingTask(pathFromSource,nodeB).executeTask().getResult()
             pathFromSource.appendPath(pathFromDestination)
 
 
         }
-        _logData.append("[Step 2] ~n position is ${l} Selected Path ${pathFromSource.getList().toString()}")
+        _disjointPaths.add(pathFromSource)
+        LogData.append("[Step 2] ~n position is ${l} Selected Path ${pathFromSource.getList()}")
 
-
+        step3(sourceNode,destinationNode)
 
     }//987654321
 
 
+    /**
+     *
+     * Step 3) Select ( ˜n − 2) sub paths σi: s → s(i) →s(i,n) → s(i,n,i) → s(i,n,i,n) → s(i,n,i,n,i) → s(i,n,i,n,i,n˜) →s(i,n,i,n,i,n˜,n)def = ai (2 ≤ i ≤ n˜−1).
+     *
+     */
+    private fun step3(sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode){
+        val n = sourceNode.getLength()
+        val _n = sourceNode.getHalfPosition()
+        for(i in 2.._n-1){
+
+            var tmpPath =
+                    UniquePath(sourceNode)
+                            .append(i)
+                            .append(n)
+                            .append(i)
+                            .append(n)
+                            .append(_n)
+                            .append(n)
+            _disjointPaths.add(tmpPath)
+            LogData.append("[Step 3] Selected Path[$i] ${tmpPath.getList()}")
+
+        }
+        step4(sourceNode)
+    }
+
+    /**
+     * Select path σn˜: s → s(n˜) → s(n˜,n) def = an˜
+     */
+    private fun step4(sourceNode: HalfPancakeNode){
+        val n = sourceNode.getLength()
+        val _n = sourceNode.getHalfPosition()
+        var tmpPath =
+                UniquePath(sourceNode)
+                .append(_n)
+                .append(n)
+
+        _disjointPaths.add(tmpPath)
+        LogData.append("[Step 4] Selected Path ${tmpPath.getList()}")
+        step5()
+    }
+
+
+    /**
+     * Step 5) Apply Algorithm PNS in P(d) to obtain ( ˜n − 1) disjoint sub paths τi: ai ~> d (2 ≤ i ≤ n˜).
+     */
+    private fun step5(){
+        for(index in 0.._disjointPaths.size - 1){
+            var path = _disjointPaths.get(index)
+            if(!path.getLastNode().getId().equals(_destinationNode.getId()))
+                path.appendOmittedPathWithDescription(_destinationNode,"~PNS~")
+            _disjointPaths.add(path)
+            LogData.append("[Step 5] Path[${index+1}] : ${_disjointPaths.get(index)}")
+        }
+        step6()
+    }
+
+    /**
+     * Step 6) Connect σi and τi to obtain τi (2 ≤ i ≤ n˜). Terminate.
+     */
+    private fun step6(){
+        LogData.append("[Step 6] Finished construct disjoint paths from {${_sourceNode.getId()}} to {${_destinationNode.getId()}} - Terminate.")
+    }
+
+
+    /**
+     * Assume that (1,2,...,n˜−1) = (sn−l+1,...,sn,sn−l,...,sn˜+1)
+     * Select path ρl: s → s(l) → s(l,n) → s(l,n,l) →s(l,n,l,n) → s(l,n,l,n,l) → s(l,n,l,n,l,n˜) → s(l,n,l,n,l,n˜,n)(= d).
+     *
+     */
+    private fun step7(sourceNode: HalfPancakeNode, positionL : Int){
+        val n = sourceNode.getLength()
+        val _n = sourceNode.getHalfPosition()
+        var tmpPath =
+                UniquePath(sourceNode)
+                        .append(positionL)
+                        .append(n)
+                        .append(positionL)
+                        .append(n)
+                        .append(positionL)
+                        .append(_n)
+                        .append(n)
+
+        _disjointPaths.add(tmpPath)
+        LogData.append("[Step 7] Selected path : ${tmpPath.getList()}")
+        step8(sourceNode,positionL)
+    }
+
+    /**
+     *  Select σ1: s → s(n) → s(n,n˜) → s(n,n˜,n) → s(n,n˜,n,n˜) → s(n,n˜,n,n˜,n)
+     *  → s(n,n˜,n,n˜,n,n˜) def = b → b(n) → b(n,n˜) →b(n,n˜,n˜−1) → b(n,n˜,n˜−1,n˜−2) → b(n,n˜,n˜−1,n˜−2,n˜−1) → b(n,n˜,n˜−1,n˜−2,n˜−1,n)def = a1.
+     */
+    private fun step8(sourceNode: HalfPancakeNode, positionL: Int){
+        val n = sourceNode.getLength()
+        val _n = sourceNode.getHalfPosition()
+        var tmpPath =
+                UniquePath(sourceNode)
+                        .append(n)
+                        .append(_n)
+                        .append(n)
+                        .append(_n)
+                        .append(n)
+                        .append(_n) // =b
+                        .append(n)
+                        .append(_n)
+                        .append(_n-1)
+                        .append(_n-2)
+                        .append(_n-1)
+                        .append(n)
+
+        _disjointPaths.add(tmpPath)
+        LogData.append("[Step 8] Selected path : ${tmpPath.getList()}")
+        step9(sourceNode,positionL)
+    }
+
+    /**
+     * Step 9) Select ( ˜n − 2) sub paths
+     * σi: s → s(i) →s(i,n) → s(i,n,i) → s(i,n,i,n)
+     * → s(i,n,i,n,i) → s(i,n,i,n,i,n˜) →s(i,n,i,n,i,n˜,n)def = ai (2 ≤ i != l ≤ n˜ −1)
+     *
+     */
+    private fun step9(sourceNode: HalfPancakeNode,  positionL: Int){
+        val n = sourceNode.getLength()
+        val _n = sourceNode.getHalfPosition()
+        for(i in 2.._n - 1){
+            if(i == positionL) continue
+            var path = UniquePath(sourceNode)
+                    .append(i)
+                    .append(n)
+                    .append(i)
+                    .append(n)
+                    .append(i)
+                    .append(_n)
+                    .append(n)
+            _disjointPaths.add(path)
+            LogData.append("[Step 9] Path[$i] : ${path.getList()}")
+        }
+        step10(sourceNode)
+    }
+
+    /**
+     * Step 10) Select path σn˜: s → s(n˜) → s(n˜,n)def = an˜
+     */
+    private fun step10(sourceNode: HalfPancakeNode){
+        val n = sourceNode.getLength()
+        val _n = sourceNode.getHalfPosition()
+        var path = UniquePath(sourceNode).append(_n).append(n)
+        _disjointPaths.add(path)
+        LogData.append("[Step 10] Selected path : ${path.getList()}")
+        step11()
+    }
+
+    /**
+     * Step 11) Apply Algorithm PNS in P(d) to obtain ( ˜n − 1)disjoint sub paths τi: ai ~> d (1 ≤ i != l ≤ n˜).
+     */
+    private fun step11(){
+        for(index in 0.._disjointPaths.size - 1){
+            var path = _disjointPaths.get(index)
+            if(!path.getLastNode().getId().equals(_destinationNode.getId()))
+                path.appendOmittedPathWithDescription(_destinationNode,"~PNS~")
+            _disjointPaths.add(path)
+            LogData.append("[Step 11] Path[${index+1}] : ${_disjointPaths.get(index)}")
+        }
+        step12()
+    }
+
+    private fun step12(){
+        LogData.append("[Step 12] Finished construct disjoint paths from {${_sourceNode.getId()}} to {${_destinationNode.getId()}} - Terminate.")
+    }
 }

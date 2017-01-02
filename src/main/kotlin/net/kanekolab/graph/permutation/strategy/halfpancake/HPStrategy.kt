@@ -1,7 +1,9 @@
 package net.kanekolab.graph.permutation.strategy.halfpancake
 
+import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.RegularGraph
 import net.kanekolab.graph.permutation.model.Node
+import net.kanekolab.graph.permutation.model.UsedNodeIds
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
 import net.kanekolab.graph.permutation.service.halfpancake.cases.*
@@ -15,19 +17,22 @@ import net.kanekolab.graph.permutation.vo.halfpancake.HPCaseType
 class HPStrategy (hpGraph:HalfPancakeGraph): Strategy (regularGraph = hpGraph){
     private var _hpdCaseService:HPDCaseService? = null
 
-    public fun getHPDCaseService():HPDCaseService{return _hpdCaseService!!}
+    fun getHPDCaseService():HPDCaseService{return _hpdCaseService!!}
 
-    override fun init(graph: RegularGraph, sourceNode: Node, destinationNode: Node){
+    override fun init(graph: RegularGraph, originalSourceNode: Node, originalDestinationNode: Node){
         if (graph !is HalfPancakeGraph)
             throw Exception("Strategy is not match with the graph. ")
-        if (sourceNode !is HalfPancakeNode)
+        if (originalSourceNode !is HalfPancakeNode)
             throw Exception("Source vertex is not match with the graph")
 
-        if (destinationNode !is HalfPancakeNode)
+        if (originalDestinationNode !is HalfPancakeNode)
             throw Exception("Source vertex is not match with the graph")
-        var currentCase  = HPN2NCaseFactory(graph, sourceNode, destinationNode).createCase()
+        var currentCase  = HPN2NCaseFactory(graph, originalSourceNode, originalDestinationNode).createCase()
         _case = currentCase
-
+        LogData.append("CURRENT CASE INFO ${currentCase.caseType} : ${currentCase.isReversedPattern}")
+        val sourceNode = if(currentCase.isReversedPattern)originalDestinationNode else originalSourceNode
+        val destinationNode = if(currentCase.isReversedPattern)originalSourceNode else originalDestinationNode
+        UsedNodeIds.setDestinationNode(destinationNode.getId())
         when(currentCase.caseType){
             HPCaseType.ODD_1 -> {
                 _hpdCaseService = HPDCase1_1_Service(graph,sourceNode,destinationNode)}

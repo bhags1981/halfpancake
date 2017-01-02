@@ -29,4 +29,7 @@ abstract class Node(id:String, degree:Int):Comparable<Node>{
 
     abstract fun getSuffixForSubGraph():String
 
+    abstract fun getNeighborByIndex(index:Int) : Node
+
+    abstract fun getNeighborById(index:String) : Node
 }

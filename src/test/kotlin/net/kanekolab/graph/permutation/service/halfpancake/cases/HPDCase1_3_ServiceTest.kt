@@ -1,5 +1,6 @@
 package net.kanekolab.graph.permutation.service.halfpancake.cases
 
+import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
 import org.junit.Test
@@ -17,7 +18,7 @@ class HPDCase1_3_ServiceTest {
         var destinationNode = graph.getNodeById("1234567") as HalfPancakeNode
         var service = HPDCase1_3_Service(graph,sourceNode,destinationNode)
         service.constructDisjointPaths()
-        println(service.getLogData().getLog())
+        println(LogData.getLog())
     }
 
 
@@ -28,6 +29,6 @@ class HPDCase1_3_ServiceTest {
         var destinationNode = graph.getNodeById("1234567") as HalfPancakeNode
         var service = HPDCase1_3_Service(graph,sourceNode,destinationNode)
         service.constructDisjointPaths()
-        println(service.getLogData().getLog())
+        println(LogData.getLog())
     }
 }

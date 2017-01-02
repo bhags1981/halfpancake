@@ -71,5 +71,49 @@ n의 모든 퍼뮤테이션을 순서대로 취득하기..
 
 
 
+error - pattern
+source [679854321] dest [123456789]
+하나의 패스안에 중복 패스가 있음
+findDisjointPathsSpecificSourceStart with Source ID 679854321
+[1483379950136] [HPDisjointPathService] initialized N2N with source = 679854321 and 123456789
+[1483379950164] [HPDisjointPathService]  Start find disjoint paths.
+[1483379950164] Start construct disjoint paths between {123456789} and {679854321} by Case 1-3 service.
+[1483379950165] [Step 1] Is exist position L ? {-1} (-1 is false)
 
+Node id 987654312 is already used.
+[1483379950136] [HPDisjointPathService] initialized N2N with source = 679854321 and 123456789
+[1483379950164] [HPDisjointPathService]  Start find disjoint paths.
+[1483379950164] Start construct disjoint paths between {123456789} and {679854321} by Case 1-3 service.
+[1483379950165] [Step 1] Is exist position L ? {-1} (-1 is false)
+[1483379950174] [Step 2] Select path p2 result =  [123456789, 213456789, 987654312, 567894312, 987654312, 897654312, 679854312, 213458976, 123458976, 679854321]
+[1483379950175] [Step 3] Select [3]th path result = [123456789, 321456789, 987654123, 678954123, 321459876, 123459876, 678954321]
+[1483379950175] [Step 3] Select [4]th path result = [123456789, 432156789, 987651234, 789651234, 432156987, 123456987, 789654321]
+[1483379950175] [Step 3] Select [5]th path result = [123456789, 543216789, 987612345, 897612345, 543216798, 123456798, 897654321]
+[1483379950175] [Step 4] Select path result = [123456789, 987654321]
+[1483379950175] [Step 5] Path[1] : [123456789, 213456789, 987654312, 567894312, 987654312, 897654312, 679854312, 213458976, 123458976, 679854321]
+[1483379950175] [Step 5] Path[2] : [123456789, 321456789, 987654123, 678954123, 321459876, 123459876, 678954321, ~PNS~, 679854321]
+[1483379950175] [Step 5] Path[3] : [123456789, 432156789, 987651234, 789651234, 432156987, 123456987, 789654321, ~PNS~, 679854321]
+[1483379950175] [Step 5] Path[4] : [123456789, 543216789, 987612345, 897612345, 543216798, 123456798, 897654321, ~PNS~, 679854321]
+[1483379950175] [Step 5] Path[5] : [123456789, 987654321, ~PNS~, 679854321]
+[1483379950175] [Step 6] Finished construct disjoint paths from {123456789} to {679854321} - Terminate.
+
+[123456789, 213456789, 987654312, 567894312, 987654312, 897654312, 679854312, 213458976, 123458976, 679854321]
+[123456789, 321456789, 987654123, 678954123, 321459876, 123459876, 678954321, ~PNS~, 679854321]
+[123456789, 432156789, 987651234, 789651234, 432156987, 123456987, 789654321, ~PNS~, 679854321]
+[123456789, 543216789, 987612345, 897612345, 543216798, 123456798, 897654321, ~PNS~, 679854321]
+[123456789, 987654321, ~PNS~, 679854321]
+
+Process finished with exit code 0
+
+
+
+2._n 는 왜 필요한가?
+    /**
+     * Select path r2: s→s(2)→s(2,n)→s(2,n,˜n),a2→ a2(n)→ a2(n,2)→ a2(n,2,n) = d where a2 = (1,2,...,n−2,n,n−1).
+     */
+    private fun step2(sourceNode: HalfPancakeNode,destinationNode: HalfPancakeNode){
+        var n = sourceNode.getLength()
+        var _n = _sourceNode.getHalfPosition()
+
+        var tmpPathFromSourceNode = UniquePath(sourceNode).append(2).append(n)//.append(_n)
 

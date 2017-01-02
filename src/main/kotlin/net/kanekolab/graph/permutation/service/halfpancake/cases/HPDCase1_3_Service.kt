@@ -1,5 +1,6 @@
 package net.kanekolab.graph.permutation.service.halfpancake.cases
 
+import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.Path
 import net.kanekolab.graph.permutation.model.UniquePath
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
@@ -12,7 +13,7 @@ import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
  */
 class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode) : HPDCaseService(graph,sourceNode,destinationNode){
     override fun constructDisjointPaths() {
-        _logData.append("Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 1-3 service.")
+        LogData.append("Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 1-3 service.")
         step1()
     }
 
@@ -24,7 +25,7 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
     private fun step1(){
 
         var (isExist,positionL) = CheckCase13Step1ConditionTask(_sourceNode, _destinationNode).executeTask().getResult()
-        _logData.append("[Step 1] Is exist position L ? {$positionL} (-1 is false) ")
+        LogData.append("[Step 1] Is exist position L ? {$positionL} (-1 is false) ")
         if(isExist == true){
             step7(positionL)
         }else{
@@ -35,45 +36,22 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
 
 
     /**
-     * Select path r2: s→s(2)→s(2,n)→s(2,n,˜n),a2→ a(n)2→ a(n,2)2→ a(n,2,n)2 = d where a2 = (1,2,...,n−2,n,n−1).
+     * Select path r2: s→s(2)→s(2,n)→s(2,n,˜n),a2→ a2(n)→ a2(n,2)→ a2(n,2,n) = d where a2 = (1,2,...,n−2,n,n−1).
      */
     private fun step2(sourceNode: HalfPancakeNode,destinationNode: HalfPancakeNode){
         var n = sourceNode.getLength()
         var _n = _sourceNode.getHalfPosition()
 
-        var tmpPathFromSourceNode = UniquePath(sourceNode)
-
-        //s(2)
-        var intermediateNode = sourceNode.getIthPrefixReversalNeighbor(2)
-        tmpPathFromSourceNode.appendNode(intermediateNode)
-
-        //s(2,n)
-        intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(n)
-        tmpPathFromSourceNode.appendNode(intermediateNode)
-
-        //s(2,n,~n)
-        intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(_n)
-        tmpPathFromSourceNode.appendNode(intermediateNode)
+        var tmpPathFromSourceNode = UniquePath(sourceNode).append(2).append(n)//.append(_n)
 
 
-        var tmpPathFromDestNode = UniquePath(destinationNode)
+        var tmpPathFromDestNode = UniquePath(destinationNode).prepend(n).prepend(2)
         //create a2.
 
-        //d(n)
-        var intermediateNode2 = destinationNode.getIthPrefixReversalNeighbor(n)
-        tmpPathFromDestNode.prependNode(intermediateNode2)
-
-        //d(n,2)
-        intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(2)
-        tmpPathFromDestNode.prependNode(intermediateNode2)
-
-        //d(n,2,n) = a2
-        intermediateNode2 = intermediateNode2.getIthPrefixReversalNeighbor(n)
-
         //Create path from //s(2,n,~n) ~> a2
-        tmpPathFromSourceNode = PancakeSimpleRoutingTask(tmpPathFromSourceNode,intermediateNode2).executeTask().getResult()
+        tmpPathFromSourceNode = PancakeSimpleRoutingTask(tmpPathFromSourceNode as UniquePath,tmpPathFromDestNode.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
         tmpPathFromSourceNode.appendPath(tmpPathFromDestNode)
-        _logData.append("[Step 2] Select path p2 result =  ${tmpPathFromSourceNode.toString()}")
+        LogData.append("[Step 2] Select path p2 result =  ${tmpPathFromSourceNode}")
         _disjointPaths.add(tmpPathFromSourceNode)
         step3(sourceNode,destinationNode)
     }
@@ -111,7 +89,7 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             //ai := s(i,n,~n-i+2,n,i,n)
             intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(n)
             tmpPath.appendNode(intermediateNode)
-            _logData.append("[Step 3] Select [$i]th path result = ${tmpPath.getList()}")
+            LogData.append("[Step 3] Select [$i]th path result = ${tmpPath.getList()}")
             _disjointPaths.add(tmpPath)
         }
         step4(sourceNode,destinationNode)
@@ -123,7 +101,7 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
 
         //Append a1
         tmpPath.appendNode(sourceNode.getIthPrefixReversalNeighbor(n))
-        _logData.append("[Step 4] Select path result = ${tmpPath.getList()}")
+        LogData.append("[Step 4] Select path result = ${tmpPath.getList()}")
         _disjointPaths.add(tmpPath)
         step5()
     }
@@ -134,7 +112,7 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             var path = _disjointPaths.get(index)
             if(!path.getLastNode().getId().equals(_destinationNode.getId()))
                 path.appendOmittedPathWithDescription(_destinationNode,"~PNS~")
-            _logData.append("[Step 5] Path[${index+1}] : ${_disjointPaths.get(index).toString()}")
+            LogData.append("[Step 5] Path[${index+1}] : ${_disjointPaths.get(index).toString()}")
         }
         step6()
     }
@@ -145,7 +123,7 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
      //Actually nothing tod.
     **/
     private fun step6(){
-        _logData.append("[Step 6] Finished construct disjoint paths from {${_sourceNode.getId()}} to {${_destinationNode.getId()}} - Terminate.")
+        LogData.append("[Step 6] Finished construct disjoint paths from {${_sourceNode.getId()}} to {${_destinationNode.getId()}} - Terminate.")
     }
 
     /**
@@ -156,7 +134,7 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
      *˜ n−l+2) →s(l;n; ˜ n−l+2;n) →s(l;n; ˜ n−l+2;n;l) →s(l;n; ˜ n−l+2;n;l; n)(= d).
      */
     private fun step7(positionL : Int){
-        _logData.append("[Step 7] Skip step7. Can find {$positionL}th path by step8.")
+        LogData.append("[Step 7] Skip step7. Can find {$positionL}th path by step8.")
         step8(_sourceNode,_destinationNode)
     }
 
@@ -196,7 +174,7 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             //ai := s(i,n,~n-i+2,n,i,n)
             intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(n)
             tmpPath.appendNode(intermediateNode)
-            _logData.append("[Step 8] Select [$i]th path result = ${tmpPath.getList()}")
+            LogData.append("[Step 8] Select [$i]th path result = ${tmpPath.getList()}")
             _disjointPaths.add(tmpPath)
         }
         step9(sourceNode,destinationNode)
@@ -209,7 +187,7 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
 
         //Append a1
         tmpPath.appendNode(sourceNode.getIthPrefixReversalNeighbor(n))
-        _logData.append("[Step 9] Select path result = ${tmpPath.getList()}")
+        LogData.append("[Step 9] Select path result = ${tmpPath.getList()}")
         _disjointPaths.add(tmpPath)
         step10()
     }
@@ -222,13 +200,13 @@ class HPDCase1_3_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             var path = _disjointPaths.get(index)
             if(!path.getLastNode().getId().equals(_destinationNode.getId()))
                 path.appendOmittedPathWithDescription(_destinationNode,"~PNS~")
-            _logData.append("[Step 10] Path[${index+1}] : ${_disjointPaths.get(index).toString()}")
+            LogData.append("[Step 10] Path[${index+1}] : ${_disjointPaths.get(index).toString()}")
         }
         step11()
     }
 
     private fun step11(){
-        _logData.append("[Step 11] Finished construct disjoint paths from {${_sourceNode.getId()}} to {${_destinationNode.getId()}} - Terminate.")
+        LogData.append("[Step 11] Finished construct disjoint paths from {${_sourceNode.getId()}} to {${_destinationNode.getId()}} - Terminate.")
 
     }
 

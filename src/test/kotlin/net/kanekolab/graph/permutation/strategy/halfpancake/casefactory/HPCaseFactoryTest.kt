@@ -58,8 +58,15 @@ class HPCaseFactoryTest {
             assertEquals(HPCaseType.ODD_OTHERWISE,hpCase.caseType)
         }
 
+    }
 
-
+    @Test
+    fun test2(){
+        var graph = HalfPancakeGraph(9)
+        var destinationNode = graph.getNodeById("123456789") as HalfPancakeNode
+        var sourceNode = graph.getNodeById("679584321") as HalfPancakeNode
+        var hpCase = HPN2NCaseFactory(graph,sourceNode,destinationNode).createCase()
+        println(hpCase.caseType.toString()+" "+hpCase.isReversedPattern)
     }
 
 }

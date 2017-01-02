@@ -3,6 +3,7 @@ package net.kanekolab.graph.permutation.model.halfpancake
 import net.kanekolab.graph.permutation.model.RegularGraph
 import net.kanekolab.graph.permutation.model.Node
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
+import net.kanekolab.graph.permutation.service.PermutationService
 
 /**
  *
@@ -30,4 +31,8 @@ class HalfPancakeGraph(dimension:Int) : RegularGraph(dimension,Math.ceil((dimens
         return HalfPancakeNode(id, _degree)
     }
 
+    override fun getRandomNode(): Node {
+        //   PermutationService().getIdentifyPermutationForDimension(_dimension)
+        throw UnsupportedOperationException()
+    }
 }

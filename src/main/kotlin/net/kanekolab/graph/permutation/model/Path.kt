@@ -10,9 +10,9 @@ open class Path (sourceNode: Node) {
     protected  var _pathList:MutableList<String> = mutableListOf(sourceNode.getId())
     protected  var _destinationNode = sourceNode
     protected  var _sourceNode = sourceNode
-
+    val size: Int get() = _pathList.size
     open fun prependNode(intermediateNode: Node) : Path{
-        UsedNodes.addNodeId(intermediateNode.getId())
+        UsedNodeIds.addNodeId(intermediateNode.getId())
         _pathList.add(0,intermediateNode.getId())
         //isNeighborが O(n)であるため
         //Debug modeが trueの場合のみ使用。a
@@ -24,6 +24,8 @@ open class Path (sourceNode: Node) {
     }
 
     open fun prependPath(intermediatePath: Path) : Path{
+        if(intermediatePath.size < 1)
+            return this
         //Check path is neighbor
         //isNeighborが O(n)であるため
         //Debug modeが trueの場合のみ使用。a
@@ -38,8 +40,8 @@ open class Path (sourceNode: Node) {
 
     open fun appendNode(intermediateNode: Node) : Path{
 
-        //Todo create new logic for check UsedNodes
-        UsedNodes.addNodeId(intermediateNode.getId())
+        //Todo create new logic for check UsedNodeIds
+        UsedNodeIds.addNodeId(intermediateNode.getId())
         _pathList.add(intermediateNode.getId())
 
         //isNeighborが O(n)であるため
@@ -52,7 +54,49 @@ open class Path (sourceNode: Node) {
         return this
     }
 
+    open fun append(neighborIndex:Int) : Path{
+        var neighbor = _destinationNode.getNeighborByIndex(neighborIndex)
+        UsedNodeIds.addNodeId(neighbor.getId())
+        _pathList.add(neighbor.getId())
+        _destinationNode = neighbor
+        return this
+    }
+
+    open fun prepend(neighborIndex:Int) : Path{
+        var neighbor = _sourceNode.getNeighborByIndex(neighborIndex)
+        UsedNodeIds.addNodeId(neighbor.getId())
+        _pathList.add(0,neighbor.getId())
+        _sourceNode = neighbor
+        return this
+    }
+
+    open fun removeLast():Path{
+        UsedNodeIds.removeNodeId(_destinationNode.getId())
+        _pathList.removeAt(_pathList.lastIndex)
+        if(this.size > 0){
+            _destinationNode = _destinationNode.getNeighborById(_pathList[_pathList.lastIndex])
+        }else{
+
+        }
+        return this
+    }
+
+    open fun removeFirst():Path {
+        UsedNodeIds.removeNodeId(_sourceNode.getId())
+        _pathList.removeAt(0)
+        if (_pathList.size > 0){
+            _sourceNode = _sourceNode.getNeighborById(_pathList[0])
+        }else{
+
+        }
+
+        return this
+    }
+
     open fun appendPath(intermediatePath: Path) : Path{
+        if(intermediatePath.size < 1 )
+            return this
+
         if(Config.debugMode && !intermediatePath.getFirstNode().isNeighbor(_destinationNode)){
             throw Exception("The node " + intermediatePath.getFirstNode().getId() + " is not neighbor node of " + _destinationNode.getId())
         }
