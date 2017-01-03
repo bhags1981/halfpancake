@@ -11,12 +11,20 @@ import org.junit.Assert.*
  */
 class FindSmallestShAndFsCsSymbolTaskTest {
     @Test
-    fun getResult() {
+    fun testOddCase() {
         var graph = HalfPancakeGraph(7)
         var sourceNode = graph.getNodeById("5612347") as HalfPancakeNode
         var destinationNode = graph.getNodeById("1234567") as HalfPancakeNode
-        var result = FindSmallestShNotInRdAndFsCsSymbolTask(graph,sourceNode,destinationNode).executeTask().getResult()
-        assertTrue(result.first.equals('1')&&result.second.equals("562"))
+        var (sh,distinctString) = FindSmallestShNotInRdAndFsCsSymbolTask(graph,sourceNode,destinationNode).executeTask().getResult()
+        assertTrue(sh.equals("1")&&distinctString.equals("562"))
     }
 
+    @Test
+    fun testEvenCase(){
+        var graph = HalfPancakeGraph(10)
+        var sourceNode = graph.getNodeById("a956123478") as HalfPancakeNode
+        var destinationNode = graph.getNodeById("a123456789") as HalfPancakeNode
+        var (sh,distinctString) = FindSmallestShNotInRdAndFsCsSymbolTask(graph,sourceNode,destinationNode).executeTask().getResult()
+        assertTrue(sh.equals("12")&&distinctString.equals("a956"))
+    }
 }

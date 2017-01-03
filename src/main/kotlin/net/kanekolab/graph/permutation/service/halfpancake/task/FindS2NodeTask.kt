@@ -14,17 +14,33 @@ class FindS2NodeTask(currentGraph:HalfPancakeGraph, sourceNode:HalfPancakeNode, 
     var _s2: HalfPancakeNode? = null
 
     override fun executeTask(): FindS2NodeTask {
-        if(_currentGraph.isEvenDimension())
-            throw UnsupportedOperationException("This task not working for even case")
-
         var rearString = _destinationNode.getRearString()
-        _sourceNode.getFrontCenterString().forEach{
 
-            element -> run{
-                if(!rearString.contains(element)) {
-                    _s2 = _currentGraph.getNodeById(_destinationNode.getRearString().reversed() + element + _sourceNode.getRearString()) as HalfPancakeNode
-                    //Break Lambda Expression
-                    return@forEach
+        if(_currentGraph.isEvenDimension()){
+            var sElements = mutableListOf<Char>()
+
+            //Find sl and sh
+            _sourceNode.getFrontCenterString().forEach {
+                element->run{
+                    if(!rearString.contains(element)){
+                        sElements.add(element)
+                    }
+                }
+            }
+            if(sElements.size < 2)
+                throw Exception("S Element needs two. source : ${_sourceNode.getId()} dest : ${_destinationNode.getId()}")
+
+            _s2 = _currentGraph.getNodeById(rearString.reversed() + sElements[0] + sElements[1] + _sourceNode.getRearString()) as HalfPancakeNode
+
+        }else {
+            _sourceNode.getFrontCenterString().forEach {
+                element ->
+                run {
+                    if (!rearString.contains(element)) {
+                        _s2 = _currentGraph.getNodeById(rearString.reversed() + element + _sourceNode.getRearString()) as HalfPancakeNode
+                        //Break Lambda Expression
+                        return@forEach
+                    }
                 }
             }
         }

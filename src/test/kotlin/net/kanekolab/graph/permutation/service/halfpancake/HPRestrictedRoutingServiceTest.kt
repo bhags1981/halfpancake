@@ -19,10 +19,23 @@ class HPRestrictedRoutingServiceTest {
         val dst = graph.getNodeById("123456789") as HalfPancakeNode
         var avoidSuffixA = "3241"
         var avoidSuffixB = "1425"
-        var hprestricted = HPRestrictedRoutingService(graph,1,src,dst,avoidSuffixA,avoidSuffixB)
-        hprestricted.findUniquePath()
+        var service = HPRestrictedRoutingService(graph,1,src,dst,avoidSuffixA,avoidSuffixB)
+        service.findUniquePath()
         println(LogData.getLog())
     }
+
+    @Test
+    fun routingTestEven(){
+        val graph = HalfPancakeGraph(10)
+        val src = graph.getNodeById("56a4798312") as HalfPancakeNode
+        val dst = graph.getNodeById("123456789a") as HalfPancakeNode
+        var avoidSuffixA = "7983"
+        var avoidSuffixB = "789a"
+        var service = HPRestrictedRoutingService(graph,1,src,dst,avoidSuffixA,avoidSuffixB)
+        service.findUniquePath()
+        println(LogData.getLog())
+    }
+
 
     @Test
     fun findUniquePathForOddCaseStep1() {
@@ -69,4 +82,18 @@ class HPRestrictedRoutingServiceTest {
         println(LogData.getLog())
     }
 
+
+    @Test
+    fun findUniquePathForEvenStep3(){
+        var dimension = 8
+        var graph = HalfPancakeGraph(dimension)
+        var pathUniqueIdentifier : Int = 0
+        var sourceNode = graph.getNodeById("61748235") as HalfPancakeNode
+        var destinationNode = graph.getNodeById("12345678") as HalfPancakeNode
+        var avoidSuffixA = "235"
+        var avoidSuffixB = "678"
+        var hpRestrictedRouting = HPRestrictedRoutingService(graph,pathUniqueIdentifier,sourceNode,destinationNode,avoidSuffixA,avoidSuffixB)
+        hpRestrictedRouting.findUniquePath()
+        println(LogData.getLog())
+    }
 }

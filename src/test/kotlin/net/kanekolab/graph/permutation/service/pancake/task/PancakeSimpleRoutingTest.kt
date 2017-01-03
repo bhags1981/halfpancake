@@ -22,5 +22,14 @@ class PancakeSimpleRoutingTest {
         pancakeSimpleRouting.executeTask()
         println(pancakeSimpleRouting.getResult())
     }
-
+    @Test
+    fun runEven() {
+        var graph:HalfPancakeGraph = HalfPancakeGraph(8)
+        var sourcePath = graph.getNodeById("315246789a")
+        var destinationNode = graph.getNodeById("87614234")
+        var path: UniquePath = UniquePath(sourcePath)
+        var pancakeSimpleRouting = PancakeSimpleRoutingTask(path,destinationNode)
+        pancakeSimpleRouting.executeTask()
+        println(pancakeSimpleRouting.getResult())
+    }
 }

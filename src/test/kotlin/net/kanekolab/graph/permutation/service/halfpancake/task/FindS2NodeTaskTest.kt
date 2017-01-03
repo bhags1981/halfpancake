@@ -11,11 +11,19 @@ import org.junit.Assert.*
  */
 class FindS2NodeTaskTest {
     @Test
-    fun executeTask() {
+    fun executeTaskForOdd() {
         val graph = HalfPancakeGraph(9)
         val src = graph.getNodeById("432185679") as HalfPancakeNode
         val dst = graph.getNodeById("987651234") as HalfPancakeNode
         println(FindS2NodeTask(graph,src,dst).executeTask().getResult().getId())
     }
 
+
+    @Test
+    fun executeTaskForEven() {
+        val graph = HalfPancakeGraph(10)
+        val src = graph.getNodeById("a438215679") as HalfPancakeNode
+        val dst = graph.getNodeById("a987651234") as HalfPancakeNode
+        println(FindS2NodeTask(graph,src,dst).executeTask().getResult().getId())
+    }
 }

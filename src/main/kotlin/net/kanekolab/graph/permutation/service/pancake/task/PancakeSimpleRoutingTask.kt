@@ -18,7 +18,7 @@ class PancakeSimpleRoutingTask(path: UniquePath, destinationNode:Node ) : Servic
         for(i in _destinationNode.getId().length - 1 downTo 1){
             var targetSymbol = _destinationNode.getId().get(i)
 
-            for(j in  0 .. currentNeighborNode.getId().length){
+            for(j in  0 .. currentNeighborNode.getId().length - 1){
                 var currentSymbol = currentNeighborNode.getId().get(j)
                 if(currentSymbol.equals(targetSymbol)){
                     if(i==j)break//No need to change

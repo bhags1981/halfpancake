@@ -16,15 +16,20 @@ import kotlin.system.exitProcess
 class HPDisjointPathServiceTest {
     @Test
     fun findDisjointPaths() {
-        val dimension = 9
+        val dimension = 11
         val graph = HalfPancakeGraph(dimension)
-        val dst = graph.getNodeById("123456789") as HalfPancakeNode
+        val dst = graph.getNodeById("123456789ab") as HalfPancakeNode
         val allPermutation = PermutationService().getAllPermutationForDimension(dimension)
 
+        var counter = 0
+        val total = allPermutation.size
 
         allPermutation.forEach {
             sourceId ->
-            println("Start with Source ID " + sourceId)
+            counter++
+            if(counter % 10000 == 0 ) {
+                println("Current Rate ${counter/total.toFloat()*100 } Current  Source ID " + sourceId)
+            }
             UsedNodeIds.init()
             LogData.init()
 
@@ -49,10 +54,10 @@ class HPDisjointPathServiceTest {
 
     @Test
     fun findDisjointPathsSpecificSource(){
-        val dimension = 9
+        val dimension = 13
         val graph = HalfPancakeGraph(dimension)
-        val src = graph.getNodeById("987654321") as HalfPancakeNode
-        val dst = graph.getNodeById("123456789") as HalfPancakeNode
+        val src = graph.getNodeById("9a87b6c543d21") as HalfPancakeNode
+        val dst = graph.getNodeById("123456789abcd") as HalfPancakeNode
         UsedNodeIds.init()
         LogData.init()
         var disjointPathService = HPDisjointPathService(graph)

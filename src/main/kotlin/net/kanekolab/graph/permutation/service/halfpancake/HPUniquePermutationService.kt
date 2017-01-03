@@ -26,7 +26,7 @@ class HPUniquePermutationService {
         var charArray = distinctElements.toCharArray()
         charArray.sort()
         var distinctSortedElements:String = String(charArray)
-        //Do fly weight
+        //Do fly light
         if(_permutationMap[distinctSortedElements] == null){
           _permutationMap[distinctSortedElements] =
                   CreateSortedPermutationsTask(distinctSortedElements).executeTask().getResult().filter{
