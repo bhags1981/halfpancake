@@ -30,8 +30,11 @@ class HPUniquePermutationService {
         if(_permutationMap[distinctSortedElements] == null){
           _permutationMap[distinctSortedElements] =
                   CreateSortedPermutationsTask(distinctSortedElements).executeTask().getResult().filter{
-              element -> (element != avoidPermutationA && element != avoidPermutationB && element != avoidPermutationA.reversed() && element != avoidPermutationB.reversed())
-            }
+        //              element -> (element != avoidPermutationA && element != avoidPermutationB && element != avoidPermutationA.reversed() && element != avoidPermutationB.reversed())
+
+                      element -> (element != avoidPermutationA && element != avoidPermutationB)
+
+                  }
         }
         return _permutationMap[distinctSortedElements]!![uniqueIdentifierI]
     }

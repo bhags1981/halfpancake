@@ -78,6 +78,7 @@ open class Path (sourceNode: Node) {
     }
 
     open fun removeFirst():Path {
+
         UsedNodeIds.removeNodeId(_sourceNode.getId())
         _pathList.removeAt(0)
         if (_pathList.size > 0){

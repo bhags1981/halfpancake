@@ -136,7 +136,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
         //Get Smallest element sh and distinct integers
         //Select path s ~> (s′1, s′2,..., s′n−˜ n, sh, s ˜ n+1, s ˜ n+2,..., sn) def = s2 where (s′1; s′2; : : : ; s′n−˜ n) = function(i,(F(s) ∪ C(s)) \ {sh},a,b)
         var (sh,distinctElement) = FindSmallestShNotInRdAndFsCsSymbolTask(_currentGraph,sourceNode,destinationNode).executeTask().getResult()
-        var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,distinctElement,_avoidSuffixA!!,_avoidSuffixB!!)
+        var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,distinctElement,_avoidSuffixA.reversed(),_avoidSuffixB.reversed())
         LogData.append("Smallest sh : " + sh + " distinct elements " + distinctElement)
 
         //Create S2
@@ -159,7 +159,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
         LogData.append("Started findUniquePathForOddStep5 ")
 
         var shAndDistinctElements = FindSmallestShInRdAndFsCsSymbolTask(_currentGraph, sourceNode, destinationNode).executeTask().getResult()
-        var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,shAndDistinctElements.second,_avoidSuffixA!!,_avoidSuffixB!!)
+        var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,shAndDistinctElements.second,_avoidSuffixA.reversed(),_avoidSuffixB.reversed())
         LogData.append("Smallest sh : " + shAndDistinctElements.first + " distinct elements " + shAndDistinctElements.second)
 
         //Create S2
@@ -238,7 +238,8 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
         //Let sl and sh be the smallest and the second smallest  elements of (F(s)∪C(s)) \ R(d), respectively.
         //Select path s ~> (s′1, s′2,..., s′n−˜n, sl,sh, s˜n+1, s˜n+2,..., sn) def = s2 where (s′1,s′2,...,s′n−˜n) = function(i,(F(s) ∪ C(s)) \ {sh},a,b)
         var (sh,distinctElement) = FindSmallestShNotInRdAndFsCsSymbolTask(_currentGraph,sourceNode,destinationNode).executeTask().getResult()
-        var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,distinctElement,_avoidSuffixA!!,_avoidSuffixB!!)
+
+        var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,distinctElement,_avoidSuffixA.reversed(),_avoidSuffixB.reversed())
         LogData.append("Smallest sh : " + sh + " distinct elements " + distinctElement)
 
         //Create S2
@@ -251,6 +252,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
         var nextSourceNode = s2.getFinalNeighbor()
         _currentPath.appendNode(nextSourceNode)
         findUniquePathForEvenStep5(nextSourceNode,destinationNode);
+
     }
 
 
@@ -258,7 +260,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
         LogData.append("Started findUniquePathForEvenStep5 ")
 
         var (sh,distinctElements) = FindSmallestShInRdAndFsCsSymbolTask(_currentGraph, sourceNode, destinationNode).executeTask().getResult()
-        var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,distinctElements,_avoidSuffixA!!,_avoidSuffixB!!)
+        var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,distinctElements,_avoidSuffixA.reversed(),_avoidSuffixB.reversed())
         LogData.append("Smallest sh : " + sh + " distinct elements " + distinctElements)
 
         //Create S2
