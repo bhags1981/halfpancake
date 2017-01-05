@@ -1,5 +1,6 @@
 package net.kanekolab.graph.permutation.service.halfpancake.cases
 
+import net.kanekolab.graph.permutation.core.Constants
 import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.Path
 import net.kanekolab.graph.permutation.model.UniquePath
@@ -166,7 +167,7 @@ class HPDCase1_5_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         for(index in 0.._disjointPaths.size - 1){
             var path = _disjointPaths.get(index)
             if(!path.getLastNode().getId().equals(_destinationNode.getId()))
-                path.appendOmittedPathWithDescription(_destinationNode,"~PNS~")
+                path.appendOmittedPathWithDescription(_destinationNode, Constants.pathPNS)
             _disjointPaths.add(path)
             LogData.append("[Step 5] Path[${index+1}] : ${_disjointPaths.get(index)}")
         }

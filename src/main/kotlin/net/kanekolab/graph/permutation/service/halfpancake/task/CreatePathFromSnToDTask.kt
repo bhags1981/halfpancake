@@ -17,38 +17,27 @@ class CreatePathFromSnToDTask(graph:HalfPancakeGraph, path:UniquePath, destinati
     private val _destinationNode:HalfPancakeNode = destinationNode
 
     override fun executeTask() : CreatePathFromSnToDTask{
-        var sourceNode = _path.getLastNode()
+        var sourceNode = _path.getFirstNode() as HalfPancakeNode;
+        var n = sourceNode.getLength()
+        var _n = _destinationNode.getHalfPosition()
 
-        //Do (S^n)
-        var intermediateNode = sourceNode.getNthNeighbor(sourceNode.getDegree())
-        _path.appendNode(intermediateNode)
+        if(_graph.isEvenDimension()
+                && sourceNode.getSuffixForSubGraph().equals(_destinationNode.getFrontString().reversed())
+                && _destinationNode.getSuffixForSubGraph().equals(sourceNode.getFrontString().reversed())
+        ){
+            //If P(s(n)) = P(d(n)), select path r1: s → s(n) → s(n,˜n) → s(n,˜n,2) → s(n,˜n,2,˜n)(= d(n)) → d.
+            _path.append(n).append(_n).append(2).append(_n).append(n)
+        }else {
+            // s → s(n) → s(n,2) → s(n,2,n)
+            _path.append(n).append(2).append(n)
+            //d -> d->(n,2)
+            var pathFromDest = UniquePath(_destinationNode).prepend(n).prepend(2)
+            //s(n,2,n) ~> d(n,2,n)
+            PancakeSimpleRoutingTask(_path, pathFromDest.getFirstNode().getNeighborByIndex(n)).executeTask()
+            //Connect all path.
+            _path.appendPath(pathFromDest)
+        }
 
-        //Do (S^n)^2
-        intermediateNode = intermediateNode.getNthNeighbor(1)
-        _path.appendNode(intermediateNode)
-
-
-        //Do ((S^n)^2)^n
-        intermediateNode = intermediateNode.getNthNeighbor(_graph.getDegree())
-        _path.appendNode(intermediateNode)
-
-
-
-
-
-        //For destination node
-        //Do n
-        var intermediateNode2 = _destinationNode.getNthNeighbor(_graph.getDegree())
-        //Do 2
-        var intermediateNode3 = intermediateNode2.getNthNeighbor(1)
-        //Do n
-        var intermediateNode4 = intermediateNode3.getNthNeighbor(_graph.getDegree())
-        var pancakeSimpleRouting = PancakeSimpleRoutingTask(_path,intermediateNode4)
-        pancakeSimpleRouting.executeTask()
-
-        _path.appendNode(intermediateNode3)
-        _path.appendNode(intermediateNode2)
-        _path.appendNode(_destinationNode)
         return this
     }
     override fun getResult():UniquePath{

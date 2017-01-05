@@ -5,15 +5,16 @@ package net.kanekolab.graph.permutation.model
  */
 object UsedNodeIds {
     private var _nodeMap:MutableMap<String,String> = mutableMapOf()
-    private var _destinationNodeId:String=""
+    private var _ignoreNodeId:String=""
     fun init(){
         _nodeMap = mutableMapOf()
     }
 
     fun addNodeId(nodeId:String){
-        if(_nodeMap.containsKey(nodeId)&&!nodeId.equals(_destinationNodeId))
-//            throw  Exception("Node id " + nodeId + " is already used.")
-            println("Node id " + nodeId + " is already used.")
+        if(_nodeMap.containsKey(nodeId)&&!nodeId.equals(_ignoreNodeId))
+            throw  Exception("Node id " + nodeId + " is already used.")
+//            println("Node id " + nodeId + " is already used.")
+
         _nodeMap.put(nodeId,nodeId)
     }
 
@@ -21,8 +22,8 @@ object UsedNodeIds {
         _nodeMap.remove(nodeId)
     }
 
-    fun setDestinationNode(nodeId:String){
-        _destinationNodeId = nodeId
+    fun setIgnoreNodeId(nodeId:String){
+        _ignoreNodeId = nodeId
     }
 
 }

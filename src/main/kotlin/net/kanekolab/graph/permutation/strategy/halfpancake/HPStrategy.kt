@@ -32,7 +32,7 @@ class HPStrategy (hpGraph:HalfPancakeGraph): Strategy (regularGraph = hpGraph){
         LogData.append("CURRENT CASE INFO ${currentCase.caseType} : ${currentCase.isReversedPattern}")
         val sourceNode = if(currentCase.isReversedPattern)originalDestinationNode else originalSourceNode
         val destinationNode = if(currentCase.isReversedPattern)originalSourceNode else originalDestinationNode
-        UsedNodeIds.setDestinationNode(destinationNode.getId())
+        UsedNodeIds.setIgnoreNodeId(destinationNode.getId())
         when(currentCase.caseType){
             HPCaseType.ODD_1 -> {
                 _hpdCaseService = HPDCase1_1_Service(graph,sourceNode,destinationNode)}

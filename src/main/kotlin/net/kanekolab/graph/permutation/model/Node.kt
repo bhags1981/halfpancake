@@ -23,6 +23,10 @@ abstract class Node(id:String, degree:Int):Comparable<Node>{
         return (other.getId().compareTo(this.getId()))
     }
 
+    fun equalId(other:Node):Boolean{
+        return (other.getId().equals(this.getId()))
+    }
+
     abstract fun getNthNeighbor(n:Int): Node
 
     abstract fun isNeighbor(other: Node):Boolean

@@ -34,8 +34,8 @@ class PancakeSimpleRoutingTask(path: UniquePath, destinationNode:Node ) : Servic
                         currentNeighborNode = currentNeighborNode.getNthNeighbor(i)
                     }catch(e:IndexOutOfBoundsException){
                         println("Index outbound exception occurred ")
-                        println("SOURCE " + _sourceNode)
-                        println("DEST " + _destinationNode)
+                        println("SOURCE " + _sourceNode.getId())
+                        println("DEST " + _destinationNode.getId())
                     }
                     _path.appendNode(currentNeighborNode)
                     break

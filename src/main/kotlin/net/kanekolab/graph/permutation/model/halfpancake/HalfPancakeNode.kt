@@ -56,6 +56,10 @@ class HalfPancakeNode(id:String, degree:Int) : Node(id,degree){
         return _degree
     }
 
+    fun getHalfElement():Char{
+        return _id[getHalfPosition()- 1]
+    }
+
     //For a node a = (a1,a2,...,an) in an n-half pancake graph, let F(a) = {a1,a2,...,an−n˜}
     fun getFrontString():String{
         return _id.substring(0,(_id.length - _degree))

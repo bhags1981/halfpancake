@@ -117,3 +117,36 @@ Process finished with exit code 0
 
         var tmpPathFromSourceNode = UniquePath(sourceNode).append(2).append(n)//.append(_n)
 
+
+
+Case 2-6
+Step 3) Select ( ˜ n−2) sub paths si: s → s(i) → s(i;n) →
+s(i;n;i) → s(i;n;i;n) → s(i;n;i;n;i) → s(i;n;i;n;i; ˜ n−1) → s(i;n;i;n;
+i; ˜ n−1;n) def = ai (2 ≤ i ≤ n−2).
+
+Select (~n-2) 가 아닌  ~n-3
+**n-2가 아닌 _n-2
+
+
+
+Case 2-6
+Step 2) If s1 = ˜ n, select path r1: s → s(n) ; a → a(n) →
+a(n; ˜ n−1)(= d(n))→d where a = (1;2; : : : ; ˜ n−1;n;n−
+1; : : : ; ˜ n). Otherwise, assume that sl = ˜ n ( ˜ n≤l ≤n), and
+select path r1: s→s(n) →s(n;n−l+1) →s(n;n−l+1; ˜ n) →
+
+l == n이면 패스 구축시 n-l+1이 제외 되어야 함
+l == n 이면 패스 구축시 2,3,2로 전이 장소를 변경 시켜줌
+                    pathFromSrc.appendNodesByIndexes(2,3,2,_n,_n-1,n,_n,n)
+
+
+Case 2-6 Step 2
+r1: s→s(n) →s(n;n−l+1) →s(n;n−l+1; ˜ n) →
+s(n;n−l+1; ˜ n) → s(n;n−l+1; ˜ n; ˜ n−1) → s(n;n−l+1; ˜ n; ˜ n−1;n) →
+s(n;n−l+1; ˜ n; ˜ n−1;n; ˜ n)→s(n;n−l+1; ˜ n; ˜ n−1;n; ˜ n;n);a→a(n)→
+a(n;2) →a(n;2; ˜ n−1) →a(n;2; ˜ n−1; ˜ n−2)(= d(n))→d where
+a = (1;2; : : : ; ˜ n−1; ˜ n+1; : : : ;n−1; ˜ n;n).
+
+a->a(n)이후의 ˜n−1; ˜n−2 는 반드시 필요한가? 팬케이크로 연결하면 되지 않는가?
+특수 케이스에서 중간에 경로를 두번 밟게됨. 즉 같은 서브그래프에 이미 도착해있는 상황에서 다른 서브 그래프로 넘어가려함
+ 123456789a -> 89a6172345  인경우에 발생했음

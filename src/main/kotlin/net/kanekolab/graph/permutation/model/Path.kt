@@ -56,17 +56,13 @@ open class Path (sourceNode: Node) {
 
     open fun append(neighborIndex:Int) : Path{
         var neighbor = _destinationNode.getNeighborByIndex(neighborIndex)
-        UsedNodeIds.addNodeId(neighbor.getId())
-        _pathList.add(neighbor.getId())
-        _destinationNode = neighbor
+        appendNode(neighbor)
         return this
     }
 
     open fun prepend(neighborIndex:Int) : Path{
         var neighbor = _sourceNode.getNeighborByIndex(neighborIndex)
-        UsedNodeIds.addNodeId(neighbor.getId())
-        _pathList.add(0,neighbor.getId())
-        _sourceNode = neighbor
+        prependNode(neighbor)
         return this
     }
 
@@ -125,5 +121,16 @@ open class Path (sourceNode: Node) {
     }
     fun getList():MutableList<String>{
         return _pathList
+    }
+
+
+    open fun appendNodesByIndexes(vararg indexes:Int):Path{
+        indexes.forEach {index->append(index)}
+        return this
+    }
+
+    open fun prependNodesByIndexes(vararg indexes:Int):Path{
+        indexes.forEach { index->prepend(index) }
+        return this
     }
 }
