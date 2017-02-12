@@ -1,5 +1,6 @@
 package net.kanekolab.graph.permutation.service.halfpancake.task
 
+import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
 import net.kanekolab.graph.permutation.service.ServiceTask
@@ -14,6 +15,7 @@ class FindS2NodeTask(currentGraph:HalfPancakeGraph, sourceNode:HalfPancakeNode, 
     var _s2: HalfPancakeNode? = null
 
     override fun executeTask(): FindS2NodeTask {
+        LogData.append("START FIND S2 for ${_sourceNode.getId()} / ${_destinationNode.getId()}")
         var rearString = _destinationNode.getRearString()
 
         if(_currentGraph.isEvenDimension()){

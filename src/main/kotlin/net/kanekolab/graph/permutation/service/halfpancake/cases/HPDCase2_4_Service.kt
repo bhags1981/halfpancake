@@ -16,7 +16,7 @@ import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
  */
 class HPDCase2_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode) : HPDCaseService(graph,sourceNode,destinationNode){
     override fun constructDisjointPaths() {
-        LogData.append("[HPDCase2_4_Service] Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 2-4 service.")
+        LogData.append("[HPDCase2_4_Service] started Case 2_4")
 
         /**
          * Do not check following condition.

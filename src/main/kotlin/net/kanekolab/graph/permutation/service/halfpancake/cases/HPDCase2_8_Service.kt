@@ -52,13 +52,27 @@ class HPDCase2_8_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         */
         //Add ~n-1
         tmpPath = UniquePath(_sourceNode)
-                .appendNodesByIndexes(_n-1,_n,_n-1,2,n)
+                .appendNodesByIndexes(_n-1,_n,_n-1)//,2,n)
+        //2を行なって出発頂点のサブグラフに行く場合があるので確認して解除
+        //これはケースを増やして例外処理をすることで治るが一旦こちらで対応
+        if((tmpPath.getLastNode() as HalfPancakeNode).getIthPrefixReversalNeighbor(2).getFrontString().reversed().equals(_destinationNode.getRearString())){
+            tmpPath.appendNodesByIndexes(3,n)
+        }else{
+            tmpPath.appendNodesByIndexes(2,n)
+        }
+
         key = tmpPath.getLastNode().getSuffixForSubGraph()
         tmpPathsA.put(key,tmpPath)
 
         //Add ~n
         tmpPath = UniquePath(_sourceNode)
-                .appendNodesByIndexes(_n,_n-1,2,_n-1,_n,n)
+                .appendNodesByIndexes(_n,_n-1,2,_n-1,_n)//,n)
+
+        if((tmpPath.getLastNode() as HalfPancakeNode).getFrontString().reversed().equals(_destinationNode.getRearString())){
+            tmpPath.appendNodesByIndexes(2,n)
+        }else{
+            tmpPath.appendNodesByIndexes(n)
+        }
         key = tmpPath.getLastNode().getSuffixForSubGraph()
         tmpPathsA.put(key,tmpPath)
 
@@ -84,15 +98,32 @@ class HPDCase2_8_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         }
 
         //Add b~n-1
+
         tmpPath2 = UniquePath(_destinationNode)
-                .prependNodesByIndexes(_n-1,_n,_n-1,2,n)
+                .prependNodesByIndexes(_n-1,_n,_n-1)//,2,n)
+        //2を行なって出発頂点のサブグラフに行く場合があるので確認して解除
+        //これはケースを増やして例外処理をすることで治るが一旦こちらで対応
+        if((tmpPath2.getFirstNode() as HalfPancakeNode).getIthPrefixReversalNeighbor(2).getFrontString().reversed().equals(_sourceNode.getRearString())){
+            tmpPath2.prependNodesByIndexes(3,n)
+        }else{
+            tmpPath2.prependNodesByIndexes(2,n)
+        }
+
+
         key2 = tmpPath2.getFirstNode().getSuffixForSubGraph()
         tmpPathsB.put(key2,tmpPath2)
 
         //Add b˜
         tmpPath2 =
                 UniquePath(_destinationNode)
-                        .prependNodesByIndexes(_n,_n-1,2,_n-1,_n,n)
+                        .prependNodesByIndexes(_n,_n-1,2,_n-1,_n)
+        ////これはケースを増やして例外処理をすることで治るが一旦こちらで対応
+        if((tmpPath2.getFirstNode() as HalfPancakeNode).getFrontString().reversed().equals(_sourceNode.getRearString())){
+            tmpPath2.prependNodesByIndexes(2,n)
+        }else{
+            tmpPath2.prependNodesByIndexes(n)
+        }
+
 
 //        if((tmpPath2.getFirstNode() as HalfPancakeNode).getFrontString().reversed().equals(_sourceNode.getSuffixForSubGraph())){
 //            tmpPath2.removeFirst().prepend(2).prepend(_n)
@@ -110,7 +141,7 @@ class HPDCase2_8_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         var removeKeys = mutableListOf<String>()
         tmpPathsA.forEach { data ->
             if(tmpPathsB.containsKey(data.key)){
-                var pair = Pair(data.value,tmpPathsB[data.key]) as Pair<Path, Path>
+                var pair = Pair(data.value,tmpPathsB[data.key]!!)
                 matchedPaths.add(pair)
                 removeKeys.add(data.key)
             }
@@ -135,11 +166,6 @@ class HPDCase2_8_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         var avoidSuffixB = _destinationNode.getSuffixForSubGraph()
         for(i in 0..matchedPaths.size - 1){
             var (pathFromSrc ,pathFromDst) = matchedPaths[i]
-
-            if(pathFromDst == null){
-                println("Path from dst is null")
-                throw NullPointerException("Path from dst is null")
-            }
             var src = pathFromSrc.getLastNode() as HalfPancakeNode
             var dst = pathFromDst.getFirstNode() as HalfPancakeNode
             UsedNodeIds.removeNodeId(src.getId())

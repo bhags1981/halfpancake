@@ -111,26 +111,29 @@ class HPN2NCaseFactory(graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, des
             return HPCase(HPCaseType.EVEN_2,0,false)
 
 
-        //Case 2-3 (s^(n) ∈ P(d)) and d(n) ∈ P(s) and (s^(n) != d)
+
+
+
+        //Case 2-3 (s^(n) ∈ P(d)) and d^(n) ∈ P(s) and (s^(n) != d)
         else if(
             _sourceNode.getFinalNeighbor().getSuffixForSubGraph().equals(_destinationNode.getSuffixForSubGraph())
             && _destinationNode.getFinalNeighbor().getSuffixForSubGraph().equals(_sourceNode.getSuffixForSubGraph())
+
         ) {
             return HPCase(HPCaseType.EVEN_3, 0, false)
         }
 
-        //Case 2-4,
+        //Case 2-4 (s^(n)∈ P(d))
         else if(
         _sourceNode.getFinalNeighbor().getSuffixForSubGraph().equals(_destinationNode.getSuffixForSubGraph())
-                && _destinationNode.getFinalNeighbor().getSuffixForSubGraph().equals(_sourceNode.getSuffixForSubGraph())
-        ) {
+        )
+         {
             return HPCase(HPCaseType.EVEN_4, 0, false)
         }
 
         //Reversed Case 2-4
         else if(
         _destinationNode.getFinalNeighbor().getSuffixForSubGraph().equals(_sourceNode.getSuffixForSubGraph())
-                && _sourceNode.getFinalNeighbor().getSuffixForSubGraph().equals(_destinationNode.getSuffixForSubGraph())
         ) {
             return HPCase(HPCaseType.EVEN_4, 0, true)
         }

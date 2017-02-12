@@ -17,7 +17,7 @@ import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
 class HPDCase1_5_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode) : HPDCaseService(graph,sourceNode,destinationNode){
     private var _positionL = -1
     override fun constructDisjointPaths() {
-        LogData.append("Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 1-5 service.")
+        LogData.append("[HPDCase1_5_Service] started Case 1_5")
         step1(_sourceNode,_destinationNode)
     }
 
@@ -168,7 +168,6 @@ class HPDCase1_5_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             var path = _disjointPaths.get(index)
             if(!path.getLastNode().getId().equals(_destinationNode.getId()))
                 path.appendOmittedPathWithDescription(_destinationNode, Constants.pathPNS)
-            _disjointPaths.add(path)
             LogData.append("[Step 5] Path[${index+1}] : ${_disjointPaths.get(index)}")
         }
         step6()
@@ -276,8 +275,7 @@ class HPDCase1_5_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         for(index in 0.._disjointPaths.size - 1){
             var path = _disjointPaths.get(index)
             if(!path.getLastNode().getId().equals(_destinationNode.getId()))
-                path.appendOmittedPathWithDescription(_destinationNode,"~PNS~")
-            _disjointPaths.add(path)
+                path.appendOmittedPathWithDescription(_destinationNode,Constants.pathPNS)
             LogData.append("[Step 11] Path[${index+1}] : ${_disjointPaths.get(index)}")
         }
         step12()

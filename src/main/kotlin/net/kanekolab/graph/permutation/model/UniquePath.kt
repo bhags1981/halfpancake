@@ -8,17 +8,17 @@ package net.kanekolab.graph.permutation.model
  */
 class UniquePath(sourceNode: Node) : Path (sourceNode = sourceNode){
 
-    override fun appendNode(node:Node): Path{
-        if(_pathList.contains(node.getId())){
-            throw Exception("The node  "+node.getId()+" already exists in the path.")
-            //println("The node  "+node.getId()+" already exists in the path.")
+    override fun appendNode(intermediateNode:Node): Path{
+        if(_pathList.contains(intermediateNode.getId())){
+            //throw Exception("The node  "+ intermediateNode.getId()+" already exists in the path.")
+            LogData.append("The node  "+intermediateNode.getId()+" already exists in the path.")
         }
-        return super.appendNode(node)
+        return super.appendNode(intermediateNode)
     }
 
-    override fun prependNode(node:Node) : Path{
-        if(_pathList.contains(node.getId()))
-            throw Exception("The node  "+node.getId()+" already exists in the path.")
-        return super.prependNode(node)
+    override fun prependNode(intermediateNode:Node) : Path{
+        if(_pathList.contains(intermediateNode.getId()))
+            throw Exception("The node  "+ intermediateNode.getId()+" already exists in the path.")
+        return super.prependNode(intermediateNode)
     }
 }

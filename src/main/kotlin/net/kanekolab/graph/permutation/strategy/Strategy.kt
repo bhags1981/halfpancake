@@ -10,7 +10,7 @@ import net.kanekolab.graph.permutation.vo.ProblemCase
 abstract  class Strategy (regularGraph: RegularGraph) {
     var _graph:RegularGraph = regularGraph
     var _case:ProblemCase? = null
-    abstract fun init(graph:RegularGraph, sourceNode: Node, destinationNode: Node)
-    abstract fun init(graph:RegularGraph, sourceVertex: Node, destinationNode:List<Node> )
-    abstract fun init(graph:RegularGraph, sourceVertex: List<Node>, destinationNode:List<Node> )
+    abstract fun init(graph:RegularGraph, originalSourceNode: Node, originalDestinationNode: Node)
+    abstract fun init(graph:RegularGraph, originalSourceNode: Node, originalDestinationNode:List<Node> )
+    abstract fun init(graph:RegularGraph, originalSourceNode: List<Node>, originalDestinationNode:List<Node> )
 }

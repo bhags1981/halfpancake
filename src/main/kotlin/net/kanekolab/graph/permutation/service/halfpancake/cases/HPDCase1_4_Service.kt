@@ -19,7 +19,7 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
     private val _positionK = positionK
     private var _positionL = -1
     override fun constructDisjointPaths() {
-        LogData.append("Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 1-4 service.")
+        LogData.append("[HPDCase1_4_Service] started Case 1_4")
         step1(_sourceNode,_destinationNode,_positionK)
     }
 

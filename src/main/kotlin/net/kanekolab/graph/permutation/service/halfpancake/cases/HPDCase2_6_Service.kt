@@ -16,7 +16,7 @@ import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
  */
 class HPDCase2_6_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode) : HPDCaseService(graph,sourceNode,destinationNode){
     override fun constructDisjointPaths() {
-        LogData.append("[HPDCase2_5_Service] Start construct disjoint paths between {${_sourceNode.getId()}} and {${_destinationNode.getId()}} by Case 2-4 service.")
+        LogData.append("[HPDCase2_6_Service] started Case 2_6")
         constructSubPaths()
         constructPNS()
     }
@@ -118,20 +118,43 @@ class HPDCase2_6_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             }
 
         }else{
-            pathFromSrc.appendNodesByIndexes(_n,_n-1,n,_n,n)
+
+
+
+            pathFromSrc.appendNodesByIndexes(_n,_n-1,n)
+            //ここで下記をやらないのは上のステップで目的頂点のサブグラフに入ることがあるため。
+            //再現したい場合は下記ソースを復活させしたの同じソースを無くした後
+            //目的頂点を98761a2345と設定する.
+            //pathFromSrc.appendNodesByIndexes(_n,n)
+
+
+
         }
 
 
-        var pathFromDst =
-                UniquePath(_destinationNode)
-                        .prependNodesByIndexes(n,_n-2,_n-1,2)
-        PancakeSimpleRoutingTask(pathFromSrc, pathFromDst.getFirstNode().getNeighborByIndex(n)).executeTask()
+
+
+        var pathFromDst =UniquePath(_destinationNode)
+
+
+        //todo
+        //証明を確認する必要あり
+        if(!_destinationNode.getIthPrefixReversalNeighbor(n).getSuffixForSubGraph().equals(pathFromSrc.getLastNode().getSuffixForSubGraph())){
+
+            //出発頂点と目的頂点のサブグラフを合わせる
+
+            pathFromDst.prependNodesByIndexes(n,_n-2,_n-1,2)
+
+            //途中の重複を解除
+            if(!(pathFromDst.getFirstNode() as HalfPancakeNode).getIthPrefixReversalNeighbor(n).getSuffixForSubGraph().equals(pathFromSrc.getLastNode().getSuffixForSubGraph()))
+                pathFromSrc.appendNodesByIndexes(_n,n)
+
+            PancakeSimpleRoutingTask(pathFromSrc, pathFromDst.getFirstNode().getNeighborByIndex(n)).executeTask()
+        }else{
+            PancakeSimpleRoutingTask(pathFromSrc, pathFromDst.getFirstNode().getNeighborByIndex(n)).executeTask()
+        }
         pathFromSrc.appendPath(pathFromDst)
         _disjointPaths.add(pathFromSrc)
-
-
-
-
 
     }
 

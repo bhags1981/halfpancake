@@ -29,10 +29,9 @@ class HPStrategy (hpGraph:HalfPancakeGraph): Strategy (regularGraph = hpGraph){
             throw Exception("Source vertex is not match with the graph")
         var currentCase  = HPN2NCaseFactory(graph, originalSourceNode, originalDestinationNode).createCase()
         _case = currentCase
-        LogData.append("CURRENT CASE INFO ${currentCase.caseType} : ${currentCase.isReversedPattern}")
-        val sourceNode = if(currentCase.isReversedPattern)originalDestinationNode else originalSourceNode
+        LogData.append("CURRENT CASE INFO ${currentCase.caseType} / Reversed pattern ${currentCase.isReversedPattern}")
+        val sourceNode = if(currentCase.isReversedPattern) originalDestinationNode else originalSourceNode
         val destinationNode = if(currentCase.isReversedPattern)originalSourceNode else originalDestinationNode
-        UsedNodeIds.setIgnoreNodeId(destinationNode.getId())
         when(currentCase.caseType){
             HPCaseType.ODD_1 -> {
                 _hpdCaseService = HPDCase1_1_Service(graph,sourceNode,destinationNode)}
@@ -46,6 +45,22 @@ class HPStrategy (hpGraph:HalfPancakeGraph): Strategy (regularGraph = hpGraph){
                 _hpdCaseService = HPDCase1_5_Service(graph,sourceNode,destinationNode)}
             HPCaseType.ODD_OTHERWISE -> {
                 _hpdCaseService = HPDCase1_6_Service(graph,sourceNode,destinationNode)}
+            HPCaseType.EVEN_1 -> {
+                _hpdCaseService = HPDCase2_1_Service(graph,sourceNode,destinationNode)}
+            HPCaseType.EVEN_2 -> {
+                _hpdCaseService = HPDCase2_2_Service(graph,sourceNode,destinationNode)}
+            HPCaseType.EVEN_3 -> {
+                _hpdCaseService = HPDCase2_3_Service(graph,sourceNode,destinationNode)}
+            HPCaseType.EVEN_4 -> {
+                _hpdCaseService = HPDCase2_4_Service(graph,sourceNode,destinationNode)}
+            HPCaseType.EVEN_5 -> {
+                _hpdCaseService = HPDCase2_5_Service(graph,sourceNode,destinationNode,currentCase.prefixPositionK)}
+            HPCaseType.EVEN_6 -> {
+                _hpdCaseService = HPDCase2_6_Service(graph,sourceNode,destinationNode)}
+            HPCaseType.EVEN_7 -> {
+                _hpdCaseService = HPDCase2_7_Service(graph,sourceNode,destinationNode)}
+            HPCaseType.EVEN_OTHERWISE -> {
+                _hpdCaseService = HPDCase2_8_Service(graph,sourceNode,destinationNode)}
             else ->{throw UnsupportedOperationException("CURRENT CASE DOES NOT SUPPORTED.")
             }
         }
@@ -53,11 +68,11 @@ class HPStrategy (hpGraph:HalfPancakeGraph): Strategy (regularGraph = hpGraph){
 
 
 
-    override fun init(graph : RegularGraph, sourceNode: Node, destinationNode: List<Node> ){
+    override fun init(graph : RegularGraph, originalSourceNode: Node, originalDestinationNode: List<Node> ){
         throw Exception("You must implements strategy for problem of Node to Set disjoint paths.")
     }
 
-    override fun init(graph  : RegularGraph, sourceNode: List<Node>, destinationNode: List<Node> ){
+    override fun init(graph  : RegularGraph, originalSourceNode: List<Node>, originalDestinationNode: List<Node> ){
         throw Exception("You must implements strategy for problem of Set to Set disjoint paths.")
     }
 }

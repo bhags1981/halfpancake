@@ -1,9 +1,6 @@
 package net.kanekolab.graph.permutation.service
 
-import net.kanekolab.graph.permutation.model.LogData
-import net.kanekolab.graph.permutation.model.Node
-import net.kanekolab.graph.permutation.model.Path
-import net.kanekolab.graph.permutation.model.RegularGraph
+import net.kanekolab.graph.permutation.model.*
 import net.kanekolab.graph.permutation.strategy.Strategy
 
 /**
@@ -12,6 +9,11 @@ import net.kanekolab.graph.permutation.strategy.Strategy
 abstract class  DisjointPathService (regularGraph: RegularGraph) {
     var graph = regularGraph
     var disjointPaths : List<Path>? = null
-    abstract fun initProblemN2N(sourceNode: Node, destinationNode: Node)
+    protected fun initPaths(){  disjointPaths = null }
+    open fun initProblemN2N(sourceNode: Node, destinationNode: Node){
+        LogData.init()
+        UsedNodeIds.init()
+        disjointPaths = null
+    }
     abstract fun findDisjointPaths()
 }

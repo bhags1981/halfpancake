@@ -12,7 +12,8 @@ import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
  */
 class HPDCase1_2_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode) : HPDCaseService(graph,sourceNode,destinationNode){
     override fun constructDisjointPaths() {
-        LogData.append("[HPDCase1_2_Service] Started Case 1_2 ")
+        LogData.append("[HPDCase1_2_Service] started Case 1_2")
+
         /**
          * Step 1) Select path r1: s→d of length 1.
          *

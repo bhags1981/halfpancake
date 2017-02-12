@@ -11,11 +11,9 @@ class PermutationManagerTest {
     @Test
     fun createAndSaveAllPermutationForString() {
 
-    }
-
-    @Test
-    fun getIdentifyPermutationForDimension() {
 
     }
+
+
 
 }

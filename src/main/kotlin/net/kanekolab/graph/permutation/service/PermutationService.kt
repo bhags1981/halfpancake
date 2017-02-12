@@ -3,6 +3,7 @@ package net.kanekolab.graph.permutation.service
 import net.kanekolab.graph.permutation.core.Constants
 import java.awt.Dimension
 import java.io.File
+import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -66,6 +67,55 @@ class PermutationService {
 
 
 
+    fun getNthPermutation(permutationDimension:Int, n:BigInteger):String{
+        if(n.compareTo(getMaxNumberForN(permutationDimension))!= -1){
+            throw IndexOutOfBoundsException("n(your input is $n ) must less than permutation max " +getMaxNumberForN(permutationDimension))
+        }
+
+        val identityPermutation = getIdentifyPermutationForDimension(permutationDimension)
+        val permSize = identityPermutation.length;
+        val permArray = identityPermutation.toCharArray()
+        val returnPermArray = CharArray(permArray.size)
+        var arrangeList = mutableListOf<Int>()
+        var remainedPositionList = mutableListOf<Int>()
+        var numerator = n;
+        remainedPositionList.add(0)
+        for (i in permSize - 1 downTo 1 step 1){
+            if(numerator.equals(BigInteger.ZERO)){
+                arrangeList.add(0)
+
+            }else{
+                var result  = numerator.divideAndRemainder(getMaxNumberForN(i))
+                arrangeList.add(result[0].toInt())
+                numerator = result[1]
+            }
+            remainedPositionList.add(permSize - i)
+        }
+        //Last
+        arrangeList.add(0)
+
+
+        for(i in 0 .. permArray.size - 1){
+            var arrange = arrangeList[i]
+            //var newPosition = defaultPosition+arrange
+            var newPosition = remainedPositionList[arrange]
+            remainedPositionList.remove(newPosition)
+
+            returnPermArray[newPosition] = permArray[i]
+        }
+        return String(returnPermArray)
+    }
+
+//    fun getN(permString:String):BigInteger{
+////        val identityArray =
+////        val permArray = permString.toCharArray()
+////        return 0;
+//
+//
+//        return BigInteger.ZERO;
+//    }
+
+
 
 
     /**
@@ -73,10 +123,10 @@ class PermutationService {
      */
     fun getIdentifyPermutationForDimension(Dimension:Int): String {
 
-        if(Constants.maxPermutation.length < Dimension)
+        if(Constants.maximumPermutation.length < Dimension)
             throw Exception("Dimension overflow");
 
-        return Constants.maxPermutation.substring(0,Dimension );
+        return Constants.maximumPermutation.substring(0,Dimension );
     }
 
     fun getRandomPermutation(dimension: Int):String{
@@ -98,4 +148,17 @@ class PermutationService {
         }
         return items
     }
+
+    fun getMaxNumberForN(n:Int):BigInteger{
+        if(n < 1 || n > Constants.maximumPermutationSize){
+            throw IndexOutOfBoundsException("Current n($n) does not supported. n must be less or equal than ${Constants.maximumPermutationSize} and bigger than 0")
+        }
+        var maxNumber = BigInteger.ONE;
+        for (i in n downTo 1 step 1){
+            maxNumber = maxNumber.multiply( BigInteger.valueOf(i.toLong()))
+        }
+        return maxNumber
+    }
+
+
 }

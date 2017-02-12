@@ -22,7 +22,6 @@ class HPDCase2_4_ServiceTest {
         allPermutation.forEach { element->
             //Continue
             if(excludedPattern.contains(element))return@forEach
-            UsedNodeIds.init()
             var src = graph.getNodeById("a987"+element) as HalfPancakeNode
             var service = HPDCase2_4_Service(graph,src,dst)
             service.constructDisjointPaths()

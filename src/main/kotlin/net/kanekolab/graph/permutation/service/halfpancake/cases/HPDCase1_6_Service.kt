@@ -99,7 +99,7 @@ class HPDCase1_6_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         var removeKeys = mutableListOf<String>()
         tmpPathsA.forEach { data ->
             if(tmpPathsB.containsKey(data.key)){
-                var pair = Pair(data.value,tmpPathsB[data.key]) as Pair<Path,Path>
+                var pair = Pair(data.value,tmpPathsB[data.key]!!)
                 matchedPaths.add(pair)
                 removeKeys.add(data.key)
             }
@@ -125,10 +125,6 @@ class HPDCase1_6_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         for(i in 0..matchedPaths.size - 1){
             var (pathFromSrc ,pathFromDst) = matchedPaths[i]
 
-            if(pathFromDst == null){
-                println("Path from dst is null")
-                throw NullPointerException("Path from dst is null")
-            }
             var src = pathFromSrc.getLastNode() as HalfPancakeNode
             var dst = pathFromDst.getFirstNode() as HalfPancakeNode
             UsedNodeIds.removeNodeId(src.getId())

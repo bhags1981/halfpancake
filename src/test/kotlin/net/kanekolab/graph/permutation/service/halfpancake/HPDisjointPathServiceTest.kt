@@ -30,8 +30,6 @@ class HPDisjointPathServiceTest {
             if(counter % 10000 == 0 ) {
                 println("Current Rate ${counter/total.toFloat()*100 } Current  Source ID " + sourceId)
             }
-            UsedNodeIds.init()
-            LogData.init()
 
             if(sourceId.equals(dst.getId())) return@forEach
 
@@ -58,8 +56,6 @@ class HPDisjointPathServiceTest {
         val graph = HalfPancakeGraph(dimension)
         val src = graph.getNodeById("9a87b6c543d21") as HalfPancakeNode
         val dst = graph.getNodeById("123456789abcd") as HalfPancakeNode
-        UsedNodeIds.init()
-        LogData.init()
         var disjointPathService = HPDisjointPathService(graph)
         try {
             println("findDisjointPathsSpecificSourceStart with Source ID " + src.getId())
@@ -72,7 +68,39 @@ class HPDisjointPathServiceTest {
             throw (e)
 
         }
-
     }
+    @Test
+    fun findDisjointPathsSpecificSource2(){
+        val dimension = 10
+        val graph = HalfPancakeGraph(dimension)
+        val src = graph.getNodeById("123456789a") as HalfPancakeNode
+
+        val dstList = listOf(
+
+//            graph.getNodeById("a987213456")
+            graph.getNodeById("4789a36215")
+
+        )
+
+
+
+
+        var disjointPathService = HPDisjointPathService(graph)
+
+        dstList.forEach {
+            try {
+                println("findDisjointPathsSpecificSourceStart with Source ID " + src.getId())
+                disjointPathService.initProblemN2N(src, it as HalfPancakeNode)
+                disjointPathService.findDisjointPaths()
+                println(LogData.getLog())
+                disjointPathService.disjointPaths!!.forEach(::println)
+            }catch (e:Exception){
+                println(LogData.getLog())
+                throw (e)
+
+            }
+        }
+    }
+
 
 }

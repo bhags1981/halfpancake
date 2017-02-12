@@ -3,8 +3,11 @@ package net.kanekolab.graph.permutation.service
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.util.*
+
+
 
 /**
  * Created by sinyu on 2017/01/02.
@@ -30,4 +33,32 @@ class PermutationServiceTest {
         PermutationService().getAllPermutationForDimension(9)
     }
 
+    @Test
+    fun getPermutationMaxNumberForN() {
+        println(PermutationService().getMaxNumberForN(20));
+    }
+
+    @Test
+    fun getNthPermutationAllTest() {
+        val dimension = 7;
+        val permutationService = PermutationService()
+        val usedSting = mutableListOf<String>()
+        for (i in 0 .. 5039){
+            var n = BigInteger.valueOf(i.toLong())
+            var result = permutationService.getNthPermutation(dimension,n);
+            println("Your ${n}th permutation for $dimension dimension is $result")
+            if(usedSting.contains(result))
+                throw Exception("$result is already used.")
+            usedSting.add(result)
+        }
+    }
+
+    @Test
+    fun getNthPermutationTest() {
+        val dimension = 5;
+        val permutationService = PermutationService()
+        var n = BigInteger.valueOf(10)
+        var result = permutationService.getNthPermutation(dimension, n);
+        println("Your ${n}th permutation for $dimension dimension is $result")
+    }
 }

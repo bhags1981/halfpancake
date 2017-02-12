@@ -31,10 +31,11 @@ class HPDCase2_8_ServiceTest{
             var service =
                     if(case.isReversedPattern)HPDCase2_8_Service(graph,dst,src)
                     else HPDCase2_8_Service(graph,src,dst)
-            UsedNodeIds.init()
             UsedNodeIds.setIgnoreNodeId(service.getCurrentDestinationNode().getId())
             try {
+                println("SRC ${service.getCurrentSourceNode().getId()} DST ${service.getCurrentDestinationNode().getId()}")
                 service.constructDisjointPaths()
+                service.getPaths().forEach(::println)
             }catch(e:Exception){
                 println(e.message)
                 println("CASE : ${case.caseType}")
@@ -57,7 +58,6 @@ class HPDCase2_8_ServiceTest{
         var service =
                 if(case.isReversedPattern)HPDCase2_8_Service(graph,dst,src)
                 else HPDCase2_8_Service(graph,src,dst)
-        UsedNodeIds.init()
         UsedNodeIds.setIgnoreNodeId(service.getCurrentDestinationNode().getId())
         try {
             service.constructDisjointPaths()

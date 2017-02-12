@@ -47,7 +47,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
 
 
     fun findUniquePath(){
-        LogData.append("[HPRestrictedRoutingService] Started find unique path between " + _originalSourceNode?.getId() + " and " + _originalDestinationNode?.getId())
+        LogData.append("[HPRestrictedRoutingService] Started find unique path between " + _originalSourceNode.getId() + " and " + _originalDestinationNode.getId())
         //Check Odd OR Even
         if(_graphDimension %2==0) {
             findUniquePathForEven(_originalSourceNode, _originalDestinationNode)
@@ -58,8 +58,6 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
     }
 
     private fun findUniquePathForOdd(sourceNode:HalfPancakeNode,destinationNode:HalfPancakeNode){
-        LogData.append("Started findUniquePathForOdd")
-
         //Check P(s) and P(d)
         //Step 1. If P(s) = P(d), select s ~> d in P(s), and terminate
         findUniquePathForOddStep1(sourceNode,destinationNode)
@@ -70,7 +68,6 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
     //Check P(s) and P(d)
     //Step 1. If P(s) = P(d), select s ~> d in P(s), and terminate
     private fun findUniquePathForOddStep1(sourceNode:HalfPancakeNode,destinationNode:HalfPancakeNode){
-        LogData.append("Started findUniquePathForOddStep1")
         //Check P(s) and P(d)
         if(sourceNode.getSuffixForSubGraph() == destinationNode.getSuffixForSubGraph()){
             LogData.append("P(s) and P(d) is same.")
@@ -88,7 +85,6 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
 
     //Step 2) Let a := (sn˜+1,sn˜+2,...,sn) and b := (dn˜+1,dn˜+2,...,dn).
     private fun findUniquePathForOddStep2(sourceNode:HalfPancakeNode,destinationNode:HalfPancakeNode){
-        LogData.append("Started findUniquePathForOddStep2")
 
 //
 //        setAvoidSuffixA(sourceNode.getRearString())
@@ -108,7 +104,6 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
     // edge s′ → s′^(n), and path s′^(n) ~> d in P(d), and terminate.
     //Check R(d) ⊂ F(s) ∪ C(s)
     private fun findUniquePathForOddStep3(sourceNode:HalfPancakeNode,destinationNode:HalfPancakeNode){
-        LogData.append("Started findUniquePathForOddStep3")
         if(CheckRdIncludedInFsCsTask(sourceNode,destinationNode).executeTask().getResult()){
             LogData.append("checkRdIncludedInFsCsTask is return true.")
             var s2Node = FindS2NodeTask(_currentGraph,sourceNode,destinationNode).executeTask().getResult()
@@ -131,7 +126,6 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
     //Start Step 4
     //find
     private fun findUniquePathForOddStep4(sourceNode:HalfPancakeNode,destinationNode: HalfPancakeNode){
-        LogData.append("Started findUniquePathForOddStep4 ")
 
         //Get Smallest element sh and distinct integers
         //Select path s ~> (s′1, s′2,..., s′n−˜ n, sh, s ˜ n+1, s ˜ n+2,..., sn) def = s2 where (s′1; s′2; : : : ; s′n−˜ n) = function(i,(F(s) ∪ C(s)) \ {sh},a,b)
@@ -156,7 +150,6 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
 
 
     private fun findUniquePathForOddStep5(sourceNode:HalfPancakeNode,destinationNode: HalfPancakeNode) {
-        LogData.append("Started findUniquePathForOddStep5 ")
 
         var shAndDistinctElements = FindSmallestShInRdAndFsCsSymbolTask(_currentGraph, sourceNode, destinationNode).executeTask().getResult()
         var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,shAndDistinctElements.second,_avoidSuffixA.reversed(),_avoidSuffixB.reversed())
@@ -176,7 +169,6 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
     }
 
     private fun findUniquePathForEven(sourceNode:HalfPancakeNode,destinationNode:HalfPancakeNode){
-        LogData.append("[HPRestrictedRoutingService] Started findUniquePathForEven")
         findUniquePathForEvenStep1(sourceNode,destinationNode)
     }
 
@@ -184,7 +176,6 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
     //Check P(s) and P(d)
     //Step 1. If P(s) = P(d), select s ~> d in P(s), and terminate
     private fun findUniquePathForEvenStep1(sourceNode:HalfPancakeNode,destinationNode:HalfPancakeNode){
-        LogData.append("Started findUniquePathForEvenStep1")
         //Check P(s) and P(d)
         if(sourceNode.getSuffixForSubGraph() == destinationNode.getSuffixForSubGraph()){
             LogData.append("P(s) and P(d) is same.")
@@ -212,12 +203,8 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
     }
 
     private fun findUniquePathForEvenStep3(sourceNode: HalfPancakeNode,destinationNode: HalfPancakeNode){
-        LogData.append("Started findUniquePathForEvenStep3")
-
         if(CheckRdIncludedInFsCsTask(sourceNode,destinationNode).executeTask().getResult()){
-            LogData.append("checkRdIncludedInFsCsTask is return true.")
             var s2Node = FindS2NodeTask(_currentGraph,sourceNode,destinationNode).executeTask().getResult()
-
             LogData.append("Found s'' = " + s2Node.getId())
             //select path s ~>  (dn,dn−1,...,dn˜+1,sh,sn˜+1,sn˜+2,...,sn) def = s′ in P(s),
             PancakeSimpleRoutingTask(_currentPath,s2Node).executeTask()
@@ -240,7 +227,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
         var (sh,distinctElement) = FindSmallestShNotInRdAndFsCsSymbolTask(_currentGraph,sourceNode,destinationNode).executeTask().getResult()
 
         var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,distinctElement,_avoidSuffixA.reversed(),_avoidSuffixB.reversed())
-        LogData.append("Smallest sh : " + sh + " distinct elements " + distinctElement)
+        LogData.append("Smallest sh on step4 : " + sh + " distinct elements " + distinctElement)
 
         //Create S2
         var s2 = _currentGraph.getNodeById(prefixElements+sh+sourceNode.getRearString()) as HalfPancakeNode
@@ -257,11 +244,9 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
 
 
     private fun findUniquePathForEvenStep5(sourceNode: HalfPancakeNode,destinationNode: HalfPancakeNode){
-        LogData.append("Started findUniquePathForEvenStep5 ")
-
         var (sh,distinctElements) = FindSmallestShInRdAndFsCsSymbolTask(_currentGraph, sourceNode, destinationNode).executeTask().getResult()
         var prefixElements = _hpUniquePermutationService.getPermutation(_currentPathIdentifierI,distinctElements,_avoidSuffixA.reversed(),_avoidSuffixB.reversed())
-        LogData.append("Smallest sh : " + sh + " distinct elements " + distinctElements)
+        LogData.append("Smallest sh on step5 : " + sh + " distinct elements " + distinctElements)
 
         //Create S2
         var s2 = _currentGraph.getNodeById(prefixElements+sh+sourceNode.getRearString()) as HalfPancakeNode
@@ -275,7 +260,7 @@ class HPRestrictedRoutingService(graph: HalfPancakeGraph, currentPathIdentifierI
 
     private fun appendFinishedLog(){
         LogData.append("Finished find unique path.")
-        LogData.append(_currentPath?.toString()!!)
+        LogData.append(_currentPath.toString())
     }
 
 }

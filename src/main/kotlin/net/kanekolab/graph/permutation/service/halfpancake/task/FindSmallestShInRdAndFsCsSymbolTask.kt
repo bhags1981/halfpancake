@@ -1,5 +1,6 @@
 package net.kanekolab.graph.permutation.service.halfpancake.task
 
+import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
 import net.kanekolab.graph.permutation.service.ServiceTask
@@ -18,9 +19,12 @@ class FindSmallestShInRdAndFsCsSymbolTask(currentGraph:HalfPancakeGraph, sourceN
 
     override fun executeTask(): FindSmallestShInRdAndFsCsSymbolTask {
         if(_currentGraph.isEvenDimension()){
+
             var rearString = _destinationNode.getRearString()
             var sl:Char? = null //smallest
             var sh:Char? = null //next
+
+            LogData.append("FRONT_CENTER " + _sourceNode.getFrontCenterString() + " / REAR " +rearString )
             _sourceNode.getFrontCenterString().forEach{
                 element ->
                 run{

@@ -1,6 +1,7 @@
 package net.kanekolab.graph.permutation.service.halfpancake.cases
 
 import net.kanekolab.graph.permutation.core.Constants
+import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.Path
 import net.kanekolab.graph.permutation.model.UniquePath
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
@@ -14,6 +15,7 @@ class HPDCase1_1_Service(graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, d
     override fun constructDisjointPaths() {
         //Select path r1: s → s(n) → s(n;2) → s(n;2;n) ; d(n;2;n) →d(n;2) →d(n) →d. and terminate.
         //Other paths can find by Pancake N2N
+        LogData.append("[HPDCase1_1_Service] started Case 1_1")
 
         var currentPath  = CreatePathFromSnToDTask(_currentGraph, UniquePath(_sourceNode),_destinationNode).executeTask().getResult()
         _disjointPaths.add(currentPath)

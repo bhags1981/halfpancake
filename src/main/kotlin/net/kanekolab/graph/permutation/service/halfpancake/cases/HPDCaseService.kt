@@ -1,10 +1,8 @@
 package net.kanekolab.graph.permutation.service.halfpancake.cases
 
-import com.sun.tools.internal.xjc.reader.gbind.SourceNode
 import net.kanekolab.graph.permutation.core.Constants
 import net.kanekolab.graph.permutation.model.LogData
 import net.kanekolab.graph.permutation.model.Path
-import net.kanekolab.graph.permutation.model.UniquePath
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
 

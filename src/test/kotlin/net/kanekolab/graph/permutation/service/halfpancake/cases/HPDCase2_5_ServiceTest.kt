@@ -23,7 +23,6 @@ class HPDCase2_5_ServiceTest {
         val allPermutation = PermutationService().getAllPermutationForString(idString)
         allPermutation.forEach { element->
             if(element.equals(idString))return@forEach
-            UsedNodeIds.init()
             var src = graph.getNodeById(element) as HalfPancakeNode
             var case = HPN2NCaseFactory(graph,src,dst).createCase()
             if(case.caseType != HPCaseType.EVEN_5)return@forEach
