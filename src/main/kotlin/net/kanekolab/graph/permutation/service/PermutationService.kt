@@ -160,5 +160,16 @@ class PermutationService {
         return maxNumber
     }
 
+    fun prefixReversalOperation(target:String, index:Int):String{
+        if(index == 0)
+            return target
+        if(index > target.length - 1 || index < 0)
+            throw Exception("Current index $index for target $target  is out of range for prefixReversalOperation.")
+
+        if(index == target.length - 1)
+            return target.reversed()
+
+        return target.substring(0,index + 1).reversed().plus(target.substring(index + 1))
+    }
 
 }

@@ -61,4 +61,14 @@ class PermutationServiceTest {
         var result = permutationService.getNthPermutation(dimension, n);
         println("Your ${n}th permutation for $dimension dimension is $result")
     }
+
+    @Test
+    fun substringReverseTest(){
+        assertEquals(PermutationService().prefixReversalOperation("123456",0),"123456");
+        assertEquals(PermutationService().prefixReversalOperation("123456",1),"213456");
+        assertEquals(PermutationService().prefixReversalOperation("123456",2),"321456");
+        assertEquals(PermutationService().prefixReversalOperation("123456",3),"432156");
+        assertEquals(PermutationService().prefixReversalOperation("123456",4),"543216");
+        assertEquals(PermutationService().prefixReversalOperation("123456",5),"654321");
+    }
 }

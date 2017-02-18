@@ -78,6 +78,7 @@ class ExperimentService(graphType:Int, graphDimension:Int, startPermutationId:Bi
         while(true){
             try {
 
+                //Finding paths.
                 disjointPathService.initProblemN2N(startNode, destinationNode)
                 disjointPathService.findDisjointPaths()
 
