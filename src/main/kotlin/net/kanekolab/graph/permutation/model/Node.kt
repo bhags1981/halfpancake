@@ -27,6 +27,18 @@ abstract class Node(id:String, degree:Int):Comparable<Node>{
         return (other.getId().equals(this.getId()))
     }
 
+    fun getCharForPaperIndex(index:Int):Char{
+        return _id[index-1];
+    }
+
+    fun getPaperIndexForChar(ch:Char):Int{
+        for(i in 0 .. _id.length){
+            if(_id[i].equals(ch))
+                return i + 1
+        }
+        return -1
+    }
+
     abstract fun getNthNeighbor(n:Int): Node
 
     abstract fun isNeighbor(other: Node):Boolean

@@ -37,15 +37,39 @@ class HPDCase2_6_ServiceV2 (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode
         //Create Path from s to d directly
         if (isIncluded) {
 
+
+            //Step 11) Select sub path s˜ n−1: s → s( ˜ n−1) → s( ˜ n−1;n) def = a˜ n−1.
+            var tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(_n - 1, n)
+            _disjointPaths.add(tmpPath)
+
+
             /*Step 8) Assume that (1;2; : : : ; ˜ n) = (sn−l+1; sn−l+2; : : : ; sn;
             sn−l ; sn−l−1; : : : ; s ˜ n; s1). Select path rl : s → s(l) →
             s(l;n)→s(l;n;l)→s(l;n;l;n)→s(l;n;l;n;l)→s(l;n;l;n;l; ˜ n−1)→
             s(l;n;l;n;l; ˜ n−1;n)(= d):*/
-            var tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(positionL, n, positionL, n, positionL, _n - 1, n)
-            _disjointPaths.add(tmpPath)
+
+            //if _n == positionL need more steps.
+            //1789a23456 (_n) -> 2a98713456 (n) -> 65431789a2 {ここで2が後ろに行くのでこのままでは789aにはいけない。}
+            //_n,n,_n-1,n,
+            //d^n ->
+            if(positionL == _n  ){
+                tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(positionL, positionL - 1, 2, n)
+                var tmpPath2 = UniquePath(_destinationNode).prependNodesByIndexes(n, positionL - 2, 2)
+                tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
+                tmpPath.appendPath(tmpPath2)
+                _disjointPaths.add(tmpPath)
+            }else if(positionL == _n - 1){
+
+            }else {
+                tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(positionL, n, positionL, n, positionL, _n - 1, n)
+                _disjointPaths.add(tmpPath)
+            }
+
+
 
 
             //Step 9) Select s1: s → s(n) → s(n; ˜ n−1) → s(n; ˜ n−1;n) → s(n; ˜ n−1;n; ˜ n−1) →s(n; ˜ n−1;n; ˜ n−1;n) def = a1.
+            //If positionL == _n - 1 a1 = d
             tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(n, _n - 1, n, _n - 1, n)
             _disjointPaths.add(tmpPath)
 
@@ -60,149 +84,99 @@ class HPDCase2_6_ServiceV2 (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode
                 _disjointPaths.add(tmpPath)
             }
 
-            //Step 11) Select sub path s˜ n−1: s → s( ˜ n−1) → s( ˜ n−1;n) def = a˜ n−1.
-            tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(_n - 1, n)
-            _disjointPaths.add(tmpPath)
-
 
             /**
              * Step 12) Select sub path s˜ n: s → s( ˜ n) → s( ˜ n;n) → s( ˜ n;n;
              * ˜ n−1) → s( ˜ n;n; ˜ n−1;n) → s( ˜ n;n; ˜ n−1;n; ˜ n−1) → s( ˜ n;n; ˜ n−1;n; ˜ n−1;
              * ˜ n−2) →s( ˜ n;n; ˜ n−1;n; ˜ n−1; ˜ n−2;n) def = a˜ n.
              */
-            tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(_n, n, _n - 1, n, _n - 1, _n - 2, n)
-            _disjointPaths.add(tmpPath)
+            if(positionL != _n) {
+                tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(_n, n, _n - 1, n, _n - 1, _n - 2, n)
+                _disjointPaths.add(tmpPath)
+            }
 
             /**
              *
              * Step 13) Apply Algorithm PNS in P(d) to obtain ( ˜ n−1)
              * */
         } else {
-            //todo update.
+
+
+
+
+
+            var symbol_n = _destinationNode.getCharForPaperIndex(_n)
+
+
+            //Step 4)
+            //Select sub path s˜n−1: s → s( ˜n−1) → s( ˜n−1,n) def = a˜n−1.
+            var tmpPath =  UniquePath(_sourceNode).appendNodesByIndexes(_n - 1, n)
+            _disjointPaths.add(tmpPath)
+
 
             /**
-             * Select _n-3 paths with checking d is selected or not
-             * Select( ˜n−3) sub paths si: s → s(i) → s(i,n) →s(i,n,i) → s(i,n,i,n) → s(i,n,i,n,i) → s(i,n,i,n,i, ˜n−1) → s(i,n,i,n,i, ˜n−1,n) def = ai
+             * Step 1
+             * Create path from s to d without use P(d)
+             * Find position of _n
              */
-            var isDestinationSelected = false
+            var positionFor_n = _sourceNode.getPaperIndexForChar(symbol_n)
+            if(positionFor_n < 1 ){
+                throw Exception("Failed to find symbol for $symbol_n" )
+            }
+
+            /**
+             * If s1 = ˜n, select path r1: s → s(n) ; a → a(n) → a(n; ˜ n−1)(= d(n))→d
+             * where a = (1, 2, ...,  ˜n−1, n, n− 1, ..., ˜n).
+             */
+            if(positionFor_n == 1){
+                tmpPath =  UniquePath(_sourceNode).appendNodesByIndexes(n)
+                var tmpPath2 = UniquePath(_destinationNode).prependNodesByIndexes(n,_n-1)
+                tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
+                tmpPath.appendPath(tmpPath2)
+                _disjointPaths.add(tmpPath)
+
+            }
+
+            /**
+             * Otherwise, assume that sl = ˜ n ( ˜ n≤l ≤n), and select path r1: s→s(n) →s(n;n−l+1) →s(n;n−l+1; ˜ n) →
+             * s(n;n−l+1; ˜ n) → s(n;n−l+1; ˜ n; ˜ n−1) → s(n;n−l+1; ˜ n; ˜ n−1;n) →
+             * s(n;n−l+1; ˜ n; ˜ n−1;n; ˜ n)→s(n;n−l+1; ˜ n; ˜ n−1;n; ˜ n;n);a→a(n)→
+             * a(n;2) →a(n;2; ˜ n−1) →a(n;2; ˜ n−1; ˜ n−2)(= d(n))→d where
+             * a = (1, 2, ... , _n−1, _n+1,..., n−1, _n,n).
+             */
+            else{
+
+
+                tmpPath =
+                        if(positionFor_n == n )
+                            //Skip n-positionFor_n+1 because identify reverse.
+                            UniquePath(_sourceNode).appendNodesByIndexes(n,_n,_n-1,n,_n,n)
+                        else
+                            UniquePath(_sourceNode).appendNodesByIndexes(n,n-positionFor_n+1,_n,_n-1,n,_n,n)
+                var tmpPath2 = UniquePath(_destinationNode).prependNodesByIndexes(n,_n-2,_n-1,2)
+                tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
+                tmpPath.appendPath(tmpPath2)
+                _disjointPaths.add(tmpPath)
+
+            }
+
+
+            /**
+             * Select ( ˜n−3) sub paths si: s → s(i) → s(i;n) → s(i;n;i) → s(i;n;i;n) → s(i;n;i;n;i) → s(i;n;i;n;i; ˜ n−1) → s(i;n;i;n; i; ˜ n−1;n) def = ai (2 ≤ i ≤ n−2).
+             *
+             */
             for (i in 2.._n - 2) {
-                var tmpPath =
-                        UniquePath(_sourceNode).appendNodesByIndexes(i, n, i, n, i, _n - 1, n)
-                isDestinationSelected = if (!isDestinationSelected) tmpPath.getLastNode().equalId(_destinationNode) else isDestinationSelected
+                 tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(i, n, i, n, i, _n - 1, n)
                 _disjointPaths.add(tmpPath)
             }
 
-
-            //Select sub path s˜n: s → s( ˜n) → s( ˜n,n) → s( ˜n,n, ˜n−1) → s( ˜n,n, ˜n−1,n) → s( ˜n,n, ˜n−1,n, ˜n−1) → s( ˜n,n, ˜n−1,n, ˜n−1, ˜n−2) →s( ˜n,n, ˜n−1,n, ˜n−1, ˜n−2,n) def = a˜n.
-            var tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(_n, n, _n - 1, n, _n - 1, _n - 2, n);
-            isDestinationSelected = if (!isDestinationSelected) tmpPath.getLastNode().equalId(_destinationNode) else isDestinationSelected
-
+            /**
+             * Step 5) Select path s˜ n: s → s( ˜ n) → s( ˜ n;n) → s( ˜ n;n; ˜ n−1) →
+             *  s( ˜ n;n; ˜ n−1;n) → s( ˜ n;n; ˜ n−1;n; ˜ n−1) → s( ˜ n;n; ˜ n−1;n; ˜ n−1; ˜ n−2) →
+             * s( ˜ n;n; ˜ n−1;n; ˜ n−1; ˜ n−2;n) def = a˜ n.
+             */
+            tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(_n,n,_n-2,n,_n-1,_n-2,n)
             _disjointPaths.add(tmpPath)
-
-            //Select sub path s˜n−1: s → s( ˜n−1) → s( ˜n−1,n) def = a˜n−1.
-            _disjointPaths.add(UniquePath(_sourceNode).appendNodesByIndexes(_n - 1, n))
-            /**
-             * Check D is selected and find last path
-             */
-            if (isDestinationSelected) {
-                //Select s1: s → s(n) → s(n, ˜n−1) → s(n, ˜n−1,n) → s(n, ˜n−1,n, ˜n−1) →s(n, ˜n−1,n, ˜n−1,n) def = a1.
-                _disjointPaths.add(
-                        UniquePath(_sourceNode)
-                                .appendNodesByIndexes(n, _n - 1, n, _n - 1, n)
-                )
-                return
-            }
-
-
-            //Find last path which connected to d with out using P(d)
-            //Find _n position on s
-            var position = 0
-            run breaker@{
-                _sourceNode.getId().forEach { element ->
-                    position++
-                    if (element.equals(_destinationNode.getHalfElement())) return@breaker //Break
-                }
-            }
-
-
-            if (position > 1 && position < _n)
-                throw Exception("Failed to find position for _n. Current position is {$position}")
-
-            //If s1 = ˜n, select path r1: s → s(n) , a → a(n) → a(n, ˜n−1)(= d(n))→d where a = (1,2, ... , ˜n−1,n,n− 1, ... , ˜n).
-            if (position == 1) {
-
-                //s -> s(n)
-                var pathFromSrc = UniquePath(_sourceNode).append(n) as UniquePath
-
-                //d -> d(n) -> d(n,_n-1)
-                var pathFromDst = UniquePath(_destinationNode).prependNodesByIndexes(n, _n - 1)
-
-                //s(n) ~> a
-                PancakeSimpleRoutingTask(pathFromSrc, pathFromDst.getFirstNode().getNeighborByIndex(n)).executeTask()
-
-                //Connect all path
-                pathFromSrc.appendPath(pathFromDst)
-
-                _disjointPaths.add(pathFromSrc)
-
-                return
-            }
-
-
-            /**
-             *  Otherwise, assume that sl = ˜n ( ˜n≤l ≤n), and
-             *   select path r1: s→s(n) →s(n,n−l+1) →s(n,n−l+1, ˜n) →
-             *   s(n,n−l+1, ˜n) → s(n,n−l+1, ˜n, ˜n−1) → s(n,n−l+1, ˜n, ˜n−1,n) →
-             *   s(n,n−l+1, ˜n, ˜n−1,n, ˜n)→s(n,n−l+1, ˜n, ˜n−1,n, ˜n,n),a→a(n)→
-             *   a(n,2) →a(n,2, ˜n−1) →a(n,2, ˜n−1, ˜n−2)(= d(n))→d where
-             *   a = (1,2, ..., ˜n−1, ˜n+1, ...,n−1, ˜n,n)
-             */
-
-            var pathFromSrc = UniquePath(_sourceNode).appendNodesByIndexes(n) as UniquePath
-            if (position < n ) {
-
-
-                pathFromSrc.appendNodesByIndexes(n - position + 1, _n, _n - 1, n)
-                //Check final dest placed in same sub graph of d(n)
-                if (!pathFromSrc.getLastNode().getSuffixForSubGraph().equals(_destinationNode.getIthPrefixReversalNeighbor(n).getSuffixForSubGraph())) {
-                    pathFromSrc.appendNodesByIndexes(_n, n)
-                }
-
-            } else {
-
-
-                pathFromSrc.appendNodesByIndexes(_n, _n - 1, n)
-                //ここで下記をやらないのは上のステップで目的頂点のサブグラフに入ることがあるため。
-                //再現したい場合は下記ソースを復活させしたの同じソースを無くした後
-                //目的頂点を98761a2345と設定する.
-                //pathFromSrc.appendNodesByIndexes(_n,n)
-
-
-            }
-
-
-            var pathFromDst = UniquePath(_destinationNode)
-
-
-            //todo
-            //証明を確認する必要あり
-            if (!_destinationNode.getIthPrefixReversalNeighbor(n).getSuffixForSubGraph().equals(pathFromSrc.getLastNode().getSuffixForSubGraph())) {
-
-                //出発頂点と目的頂点のサブグラフを合わせる
-
-                pathFromDst.prependNodesByIndexes(n, _n - 2, _n - 1, 2)
-
-                //途中の重複を解除
-                if (!(pathFromDst.getFirstNode() as HalfPancakeNode).getIthPrefixReversalNeighbor(n).getSuffixForSubGraph().equals(pathFromSrc.getLastNode().getSuffixForSubGraph()))
-                    pathFromSrc.appendNodesByIndexes(_n, n)
-
-                PancakeSimpleRoutingTask(pathFromSrc, pathFromDst.getFirstNode().getNeighborByIndex(n)).executeTask()
-            } else {
-                PancakeSimpleRoutingTask(pathFromSrc, pathFromDst.getFirstNode().getNeighborByIndex(n)).executeTask()
-            }
-            pathFromSrc.appendPath(pathFromDst)
-            _disjointPaths.add(pathFromSrc)
-
         }
     }
 
