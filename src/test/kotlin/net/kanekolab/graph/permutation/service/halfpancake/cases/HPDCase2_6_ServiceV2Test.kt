@@ -49,30 +49,34 @@ class HPDCase2_6_ServiceV2Test {
           Found positionL : 3 for case 2_6 step 1 between 6789a54123 and 123456789a
           Found positionL : 2 for case 2_6 step 1 between 6789a54312 and 123456789a
         * */
-        val dimension = 10
+        val dimension = 12
         val graph = HalfPancakeGraph(dimension);
-        val sourceNode = graph.getNodeById("1789a62345") as HalfPancakeNode
-        val destNode = graph.getNodeById("123456789a") as HalfPancakeNode
+        val sourceNode = graph.getNodeById("189abc234576") as HalfPancakeNode //223811124
+        val destNode = graph.getNodeById("123456789abc") as HalfPancakeNode
         val service = HPDCase2_6_ServiceV2(graph,sourceNode,destNode)
         service.constructDisjointPaths()
         println(service.getPaths().toString())
         println(LogData.getLog())
-
+        println()
     }
 
     @Test
     fun constructDisjointPathsForCase26Step2Over() {
-        val dimension = 10
+        val dimension = 12
         val graph = HalfPancakeGraph(dimension);
 
         val sourceNode = graph.getNodeById(PermutationService().getIdentifyPermutationForDimension(dimension)) as HalfPancakeNode
-        var currentNodeId: BigInteger = BigInteger.valueOf(1)
-        var endNodeId: BigInteger = BigInteger.valueOf(3628799)
+        var currentNodeId: BigInteger = BigInteger.valueOf(2000000)
+        var endNodeId: BigInteger = BigInteger.valueOf(479001599)
 
 
         while(currentNodeId.compareTo(endNodeId) == -1 ){
             var destNode = graph.getNodeById(PermutationService().getNthPermutation(dimension,currentNodeId)) as HalfPancakeNode
             var currentCase = HPN2NCaseFactory(graph,sourceNode,destNode).createCase()
+
+            if(currentNodeId.divideAndRemainder(BigInteger.valueOf(500000))[1].equals(BigInteger.ZERO))
+                println(currentNodeId.toString() + "(" + "%.4f".format(currentNodeId.toLong() / 479001599.0) + "%)")
+
             if(currentCase.caseType.equals(HPCaseType.EVEN_6)) {
                 var (tmpSourceNode,tmpDestNode) = if(currentCase.isReversedPattern){
                     Pair(destNode,sourceNode)
@@ -84,6 +88,8 @@ class HPDCase2_6_ServiceV2Test {
                     val service = HPDCase2_6_ServiceV2(graph, tmpSourceNode, tmpDestNode)
                     service.constructDisjointPaths()
                     println("$currentNodeId")
+                    println("Source : ${tmpSourceNode.getId()} Dest : ${tmpDestNode.getId()}")
+                    //println(service.getPaths().toString())
                 }catch (e:Exception){
                     println("Failed with error ${e.message}")
                     println("Source : ${tmpSourceNode.getId()} Dest : ${tmpDestNode.getId()}")

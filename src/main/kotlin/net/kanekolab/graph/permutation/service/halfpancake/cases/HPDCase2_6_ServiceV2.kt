@@ -146,16 +146,19 @@ class HPDCase2_6_ServiceV2 (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode
              */
             else{
 
-
-                tmpPath =
-                        if(positionFor_n == n )
-                            //Skip n-positionFor_n+1 because identify reverse.
-                            UniquePath(_sourceNode).appendNodesByIndexes(n,_n,_n-1,n,_n,n)
-                        else
-                            UniquePath(_sourceNode).appendNodesByIndexes(n,n-positionFor_n+1,_n,_n-1,n,_n,n)
-                var tmpPath2 = UniquePath(_destinationNode).prependNodesByIndexes(n,_n-2,_n-1,2)
-                tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
-                tmpPath.appendPath(tmpPath2)
+                //以下の重複経路を防止。
+                //123456789abc, cba987654321, 6789abc54321, ba9876c54321, 12345c6789ab, 6c54321789ab, ba98712345c6, 6c54321789ab, c654321789ab, 23456c1789ab, 65432c1789ab, ba9871c23456]
+                if(positionFor_n == n ){
+                    tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(n,_n,_n-1,n)
+                    var tmpPath2 = UniquePath(_destinationNode)
+                    tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
+                    tmpPath.appendPath(tmpPath2)
+                }else{
+                    tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(n,n-positionFor_n+1,_n,_n-1,n,_n,n)
+                    var tmpPath2 = UniquePath(_destinationNode).prependNodesByIndexes(n,_n-2,_n-1,2)
+                    tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
+                    tmpPath.appendPath(tmpPath2)
+                }
                 _disjointPaths.add(tmpPath)
 
             }
