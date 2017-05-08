@@ -38,7 +38,7 @@ class HPDCase2_6_ServiceV2Test {
 
     }
 
-    //@Test
+    @Test
     fun constructDisjointPathsForCase26SpecificCase() {
 
         /*
@@ -51,7 +51,7 @@ class HPDCase2_6_ServiceV2Test {
         * */
         val dimension = 12
         val graph = HalfPancakeGraph(dimension);
-        val sourceNode = graph.getNodeById("189abc234576") as HalfPancakeNode //223811124
+        val sourceNode = graph.getNodeById("ca9871b23456") as HalfPancakeNode //223811124
         val destNode = graph.getNodeById("123456789abc") as HalfPancakeNode
         val service = HPDCase2_6_ServiceV2(graph,sourceNode,destNode)
         service.constructDisjointPaths()
@@ -60,13 +60,13 @@ class HPDCase2_6_ServiceV2Test {
         println()
     }
 
-    @Test
+    //@Test
     fun constructDisjointPathsForCase26Step2Over() {
         val dimension = 12
         val graph = HalfPancakeGraph(dimension);
 
         val sourceNode = graph.getNodeById(PermutationService().getIdentifyPermutationForDimension(dimension)) as HalfPancakeNode
-        var currentNodeId: BigInteger = BigInteger.valueOf(2000000)
+        var currentNodeId: BigInteger = BigInteger.valueOf(71000000)
         var endNodeId: BigInteger = BigInteger.valueOf(479001599)
 
 

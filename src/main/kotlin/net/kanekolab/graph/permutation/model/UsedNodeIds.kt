@@ -12,7 +12,7 @@ object UsedNodeIds {
 
     fun addNodeId(nodeId:String){
         if(_nodeMap.containsKey(nodeId)&&!nodeId.equals(_ignoreNodeId)) {
-            //LogData.append("Node id " + nodeId + " is already used.")
+            //LogData.append("Node id ${nodeId} is already used.")
             throw  Exception("Node id $nodeId is already used.")
         }
 

@@ -149,8 +149,11 @@ class HPDCase2_6_ServiceV2 (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode
                 //以下の重複経路を防止。
                 //123456789abc, cba987654321, 6789abc54321, ba9876c54321, 12345c6789ab, 6c54321789ab, ba98712345c6, 6c54321789ab, c654321789ab, 23456c1789ab, 65432c1789ab, ba9871c23456]
                 if(positionFor_n == n ){
-                    tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(n,_n,_n-1,n)
-                    var tmpPath2 = UniquePath(_destinationNode)
+
+                    //목적 정점과 출발 정점이 각 2개의 다른 서브그래프를 이용하여 별도의 서브그래프에서 만날수 있도록 조정
+                    //tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(n,_n,_n-1,n)
+                    tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(n,2,3,n,_n-1,2,n)
+                    var tmpPath2 = UniquePath(_destinationNode).prependNodesByIndexes(n,2)
                     tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
                     tmpPath.appendPath(tmpPath2)
                 }else{
