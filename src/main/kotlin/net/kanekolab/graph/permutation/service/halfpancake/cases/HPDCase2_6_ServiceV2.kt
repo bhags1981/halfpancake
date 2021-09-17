@@ -157,8 +157,15 @@ class HPDCase2_6_ServiceV2 (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode
                     tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
                     tmpPath.appendPath(tmpPath2)
                 }else{
-                    tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(n,n-positionFor_n+1,_n,_n-1,n,_n,n)
-                    var tmpPath2 = UniquePath(_destinationNode).prependNodesByIndexes(n,_n-2,_n-1,2)
+                    tmpPath = UniquePath(_sourceNode).appendNodesByIndexes(n,n-positionFor_n+1,_n,_n-1,n)
+                    //,_n,n)
+                    var tmpPath2 = UniquePath(_destinationNode)
+                    //Check same sub graph or not.
+                    if(!tmpPath.getLastNode().getSuffixForSubGraph().equals(_destinationNode.getNeighborByIndex(n).getSuffixForSubGraph())){
+                        tmpPath.appendNodesByIndexes(_n,n)
+                        tmpPath2.prependNodesByIndexes(n,_n-2,_n-1,2)
+                    }
+                    //,_n-2,_n-1,2)
                     tmpPath = PancakeSimpleRoutingTask(tmpPath as UniquePath, tmpPath2.getFirstNode().getNeighborByIndex(n)).executeTask().getResult()
                     tmpPath.appendPath(tmpPath2)
                 }

@@ -18,6 +18,7 @@ import net.kanekolab.graph.permutation.service.pancake.task.PancakeSimpleRouting
 class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, destinationNode: HalfPancakeNode,positionK:Int) : HPDCaseService(graph,sourceNode,destinationNode){
     private val _positionK = positionK
     private var _positionL = -1
+    private var _positionT = -1
     override fun constructDisjointPaths() {
         LogData.append("[HPDCase1_4_Service] started Case 1_4")
         step1(_sourceNode,_destinationNode,_positionK)
@@ -38,7 +39,7 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
             _positionL = positionL
             step6(sourceNode,destinationNode,positionK,positionL)
         }else{
-            step2(sourceNode,destinationNode,positionK)
+             step2(sourceNode,destinationNode,positionK)
         }
     }
 
@@ -117,9 +118,8 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
                 if((tmpPath.getLastNode() as HalfPancakeNode).getFrontString().equals(destinationNode.getFrontString())){
                    tmpPath.append(i)
                 }
-                tmpPath.append(n).append(i)
+                tmpPath.append(n).append(i).append(positionK).append(n)
 
-                //.append(positionK).append(n)
             }
 
             _disjointPaths.add(tmpPath)
@@ -161,8 +161,12 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         val _n = sourceNode.getHalfPosition()
         var tmpPath = UniquePath(sourceNode)
 
+        if(positionK == positionL)
+            _positionT = _n
+        else
+            _positionT = positionL
         //s(l)
-        var intermediateNode = sourceNode.getIthPrefixReversalNeighbor(positionL)
+        var intermediateNode = sourceNode.getIthPrefixReversalNeighbor( _positionT )
         tmpPath.appendNode(intermediateNode)
 
         //s(l,n)
@@ -178,7 +182,7 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         tmpPath.appendNode(intermediateNode)
 
         //s(l,n,~n-l+2,n,l)
-        intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(positionL)
+        intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(_positionT)
         tmpPath.appendNode(intermediateNode)
 
         //s(l,n,~n-l+2,n,l,k)
@@ -208,7 +212,13 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
         tmpPath.appendNode(intermediateNode)
 
         //s(n,~n-k+2)
-        intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(_n-positionK+2)
+
+
+        if(_positionL == _positionK)
+            intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(2)
+        else
+            intermediateNode = intermediateNode.getIthPrefixReversalNeighbor(_n-positionK+2)
+
         tmpPath.appendNode(intermediateNode)
 
         //s(n,~n-k+2,n)
@@ -240,7 +250,7 @@ class HPDCase1_4_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
 
 
         for (i in 2 .. _n){
-            if(i == positionL)continue
+            if(i ==  _positionT )continue
 
             var tmpPath = UniquePath(sourceNode)
 

@@ -24,7 +24,7 @@ class HPUniquePermutationService {
     //distinctSortedElements must be sorted.
     fun getPermutation(uniqueIdentifierI:Int, distinctElements:String, avoidPermutationA:String, avoidPermutationB:String):String{
 
-        LogData.append("AVOID FOR A $avoidPermutationA AVOID FOR B $avoidPermutationB")
+        LogData.append("[HPUniquePermutationService] AVOID FOR A $avoidPermutationA AVOID FOR B $avoidPermutationB")
         var charArray = distinctElements.toCharArray()
         charArray.sort()
         var distinctSortedElements:String = String(charArray)
@@ -53,7 +53,7 @@ class HPUniquePermutationService {
                   }
         }
         var result =  _permutationMap[distinctSortedElements]!![uniqueIdentifierI]
-        LogData.append("RESULT OF UNIQUE PERMUTATION $result" )
+        LogData.append("[HPUniquePermutationService] RESULT OF UNIQUE PERMUTATION $result" )
         return result
     }
 }

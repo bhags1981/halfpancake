@@ -11,16 +11,16 @@ class HPUniquePermutationServiceTest {
     @Test
     fun getPermutation() {
         var hpUniquePermutationService = HPUniquePermutationService()
-        var uniqueDefaultString = "1234"
-        var avoidA = "4312"
-        var avoidB = "2143"
-        for ( i in 0..5){
+        var uniqueDefaultString = "1234567"
+        var avoidA = "1234567"
+        var avoidB = "3561274"
+        for ( i in 0..4){
             var permutation = hpUniquePermutationService.getPermutation(i,uniqueDefaultString,avoidA,avoidB)
             assertFalse(avoidA.equals(permutation))
             assertFalse(avoidB.equals(permutation))
             assertFalse(avoidA.reversed().equals(permutation))
             assertFalse(avoidB.reversed().equals(permutation))
-
+            println(permutation)
         }
 
 

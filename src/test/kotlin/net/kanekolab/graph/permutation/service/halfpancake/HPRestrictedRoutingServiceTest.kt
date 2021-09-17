@@ -5,9 +5,6 @@ import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
 import org.junit.Test
 
-import org.junit.Assert.*
-import sun.rmi.runtime.Log
-
 /**
  * Created by bhags on 2016/12/29.
  */

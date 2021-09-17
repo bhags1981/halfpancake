@@ -20,30 +20,18 @@ class CheckCase14Step1ConditionTask(sourceNode : HalfPancakeNode, destinationNod
 
         if(frontCenterOfDest.equals(centerRearOfSource)) {
             _isIncluded = true
-            _positionL = _sourceNode.getHalfPosition()
+            _positionL = 2
             return this
         }
 
         for(i in 1 .. centerRearOfSource.length - 1){
-            /**
-             * Except k position
-             * Because  in case 1-4 k,n = P(d)
-             *  Ex
-             *  S = 8976(54312)
-             *  D = 123456789
-             *  k == 2
-             *  Skip i == (centerRearOfSource.length - k )
-             *
-             */
-            if(i == centerRearOfSource.length - _positionK )  continue
-
             // get Substring
             var subString = centerRearOfSource.substring(0,i)
             var remainedString = centerRearOfSource.substring(i)
             var newString = remainedString + subString.reversed()
             if(frontCenterOfDest.equals(newString)){
                 _isIncluded = true
-                _positionL = centerRearOfSource.length - i
+                _positionL = _sourceNode.getHalfPosition() - (centerRearOfSource.length - i) + 2
                 return this
             }
         }

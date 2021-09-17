@@ -50,6 +50,14 @@ class HPDCase1_6_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
                 .append(3)
                 .append(_n)
 
+
+//        tmpPath = UniquePath(_sourceNode)
+//                .append(_n)
+//                .append(_n-1)
+//                .append(_n)
+
+
+        //_n,3,2,3,_n,nが直接目的頂点の部分グラフに行く場合
         if((tmpPath.getLastNode() as HalfPancakeNode).getFrontString().reversed().equals(_destinationNode.getSuffixForSubGraph())){
             tmpPath.removeLast().append(2).append(_n)
         }
@@ -86,6 +94,15 @@ class HPDCase1_6_Service (graph: HalfPancakeGraph, sourceNode: HalfPancakeNode, 
                 .prepend(2)
                 .prepend(3)
                 .prepend(_n)
+
+
+        //Add b˜
+//        tmpPath2 = UniquePath(_destinationNode)
+//                .prepend(_n)
+//                .prepend(_n-1)
+//                .prepend(_n)
+
+
         if((tmpPath2.getFirstNode() as HalfPancakeNode).getFrontString().reversed().equals(_sourceNode.getSuffixForSubGraph())){
             tmpPath2.removeFirst().prepend(2).prepend(_n)
         }
