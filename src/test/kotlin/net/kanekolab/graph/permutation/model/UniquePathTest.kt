@@ -1,10 +1,8 @@
 package net.kanekolab.graph.permutation.model
-
+import org.junit.Test
 import net.kanekolab.graph.permutation.core.Config
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeGraph
 import net.kanekolab.graph.permutation.model.halfpancake.HalfPancakeNode
-import org.junit.Test
-
 import org.junit.Assert.*
 
 /**

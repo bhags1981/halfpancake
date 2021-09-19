@@ -21,3 +21,4 @@ build/kotlin-classes/net.kanekolab.graph.halfpancake.main/META-INF/HalfPancakeGr
 .gradle/2.9/taskArtifacts/fileHashes.bin
 
 .gradle/2.9/taskArtifacts/cache.properties.lock
+.DS_Store
